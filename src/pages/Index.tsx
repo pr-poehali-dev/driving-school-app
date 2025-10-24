@@ -127,7 +127,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+              <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center">
                 <Icon name="Car" className="text-white" size={24} />
               </div>
               <div>
@@ -145,7 +145,7 @@ const Index = () => {
         </div>
       </header>
 
-      <section className="py-20 px-4 bg-gradient-to-br from-primary/10 via-secondary/10 to-background">
+      <section className="py-20 px-4 bg-muted">
         <div className="container mx-auto text-center animate-fade-in">
           <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Лицензия ГИБДД №12345</Badge>
           <h2 className="text-5xl md:text-6xl font-bold mb-6 gradient-text">
@@ -155,14 +155,14 @@ const Index = () => {
             Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 hover-scale" onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}>
+            <Button size="lg" className="bg-primary hover:bg-primary/90 hover-scale" onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}>
               <Icon name="Rocket" size={20} className="mr-2" />
               Выбрать курс
             </Button>
           </div>
 
           <div className="grid md:grid-cols-3 gap-6 mt-16 max-w-4xl mx-auto">
-            <Card className="hover-scale border-2 hover:border-primary/50 transition-all">
+            <Card className="hover-scale border-2 hover:border-primary transition-all">
               <CardHeader>
                 <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                   <Icon name="Award" className="text-primary" size={28} />
@@ -171,7 +171,7 @@ const Index = () => {
                 <CardDescription>на рынке обучения</CardDescription>
               </CardHeader>
             </Card>
-            <Card className="hover-scale border-2 hover:border-secondary/50 transition-all">
+            <Card className="hover-scale border-2 hover:border-secondary transition-all">
               <CardHeader>
                 <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
                   <Icon name="Users" className="text-secondary" size={28} />
@@ -180,7 +180,7 @@ const Index = () => {
                 <CardDescription>выпускников</CardDescription>
               </CardHeader>
             </Card>
-            <Card className="hover-scale border-2 hover:border-primary/50 transition-all">
+            <Card className="hover-scale border-2 hover:border-primary transition-all">
               <CardHeader>
                 <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                   <Icon name="TrendingUp" className="text-primary" size={28} />
@@ -205,7 +205,7 @@ const Index = () => {
               <Card key={course.id} className="hover-scale flex flex-col">
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
-                    <Badge className="text-lg px-4 py-1 bg-gradient-to-r from-primary to-secondary">
+                    <Badge className="text-lg px-4 py-1 bg-primary">
                       Категория {course.category}
                     </Badge>
                     <Icon name="Car" className="text-primary" size={32} />
@@ -233,7 +233,7 @@ const Index = () => {
                 <CardFooter>
                   <Button 
                     onClick={() => handleEnroll(course)} 
-                    className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90"
+                    className="w-full bg-primary hover:bg-primary/90"
                   >
                     Записаться
                   </Button>
@@ -255,7 +255,7 @@ const Index = () => {
             {instructors.map((instructor) => (
               <Card key={instructor.id} className="hover-scale">
                 <CardHeader>
-                  <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mx-auto mb-4">
+                  <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
                     <Icon name="UserCircle" className="text-primary" size={64} />
                   </div>
                   <CardTitle className="text-center">{instructor.name}</CardTitle>
@@ -309,9 +309,9 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="bg-gradient-to-r from-primary/10 to-secondary/10 py-8 px-4 mt-20">
+      <footer className="bg-secondary py-8 px-4 mt-20">
         <div className="container mx-auto text-center">
-          <p className="text-muted-foreground">© 2024 АвтоПрофи. Все права защищены.</p>
+          <p className="text-white">© 2024 АвтоПрофи. Все права защищены.</p>
         </div>
       </footer>
 
@@ -364,7 +364,7 @@ const Index = () => {
                 rows={3}
               />
             </div>
-            <Button type="submit" className="w-full bg-gradient-to-r from-primary to-secondary">
+            <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
               Отправить заявку
             </Button>
           </form>
