@@ -173,12 +173,6 @@ const Admin = () => {
                 На главную
               </Button>
             </form>
-            <div className="mt-6 p-3 bg-muted rounded-lg">
-              <p className="text-xs text-muted-foreground text-center">
-                <Icon name="Info" size={14} className="inline mr-1" />
-                Пароль для доступа: <strong>AutoProfi2024!</strong>
-              </p>
-            </div>
           </CardContent>
         </Card>
       </div>
