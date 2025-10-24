@@ -139,11 +139,8 @@ const Index = () => {
               <a href="#courses" className="text-sm font-medium hover:text-primary transition-colors">Курсы</a>
               <a href="#instructors" className="text-sm font-medium hover:text-primary transition-colors">Инструкторы</a>
               <a href="#contact" className="text-sm font-medium hover:text-primary transition-colors">Контакты</a>
+              <a href="/admin" className="text-sm font-medium hover:text-primary transition-colors">Админ-панель</a>
             </nav>
-            <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90">
-              <Icon name="Phone" size={16} className="mr-2" />
-              Позвонить
-            </Button>
           </div>
         </div>
       </header>
@@ -158,13 +155,9 @@ const Index = () => {
             Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 hover-scale">
+            <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 hover-scale" onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}>
               <Icon name="Rocket" size={20} className="mr-2" />
-              Записаться на курс
-            </Button>
-            <Button size="lg" variant="outline" className="hover-scale">
-              <Icon name="Play" size={20} className="mr-2" />
-              Виртуальный тур
+              Выбрать курс
             </Button>
           </div>
 
