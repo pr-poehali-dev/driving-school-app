@@ -10,6 +10,11 @@ import os
 import psycopg2
 from typing import Dict, Any
 
+def escape_sql_string(value: str) -> str:
+    if value is None:
+        return 'NULL'
+    return "'" + str(value).replace("'", "''") + "'"
+
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     method: str = event.get('httpMethod', 'GET')
     
@@ -19,7 +24,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'headers': {
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Headers': 'Content-Type, X-Admin-Auth',
                 'Access-Control-Max-Age': '86400'
             },
             'body': '',
@@ -43,11 +48,11 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     
     if method == 'GET':
         if table == 'courses':
-            cursor.execute("SELECT id, title, category, description, duration, price, features FROM courses ORDER BY id")
+            cursor.execute("SELECT id, title, category, description, duration, price, features FROM t_p22853855_driving_school_app.courses ORDER BY id")
         elif table == 'instructors':
-            cursor.execute("SELECT id, name, specialization, experience, rating, bio FROM instructors ORDER BY id")
+            cursor.execute("SELECT id, name, specialization, experience, rating, bio FROM t_p22853855_driving_school_app.instructors ORDER BY id")
         elif table == 'enrollments':
-            cursor.execute("SELECT id, full_name, phone, email, course_id, message, status, created_at FROM enrollments ORDER BY created_at DESC")
+            cursor.execute("SELECT id, full_name, phone, email, course_id, message, status, created_at FROM t_p22853855_driving_school_app.enrollments ORDER BY created_at DESC")
         else:
             cursor.close()
             conn.close()
@@ -76,23 +81,43 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
         body_data = json.loads(event.get('body', '{}'))
         
         if table == 'courses':
-            cursor.execute(
-                "INSERT INTO courses (title, category, description, duration, price, features) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
-                (body_data.get('title'), body_data.get('category'), body_data.get('description'),
-                 body_data.get('duration'), body_data.get('price'), body_data.get('features', []))
-            )
+            features_str = "ARRAY[" + ", ".join([escape_sql_string(f) for f in body_data.get('features', [])]) + "]"
+            query = f"""
+                INSERT INTO t_p22853855_driving_school_app.courses 
+                (title, category, description, duration, price, features) 
+                VALUES ({escape_sql_string(body_data.get('title'))}, 
+                        {escape_sql_string(body_data.get('category'))}, 
+                        {escape_sql_string(body_data.get('description'))}, 
+                        {escape_sql_string(body_data.get('duration'))}, 
+                        {body_data.get('price', 0)}, 
+                        {features_str}) 
+                RETURNING id
+            """
+            cursor.execute(query)
         elif table == 'instructors':
-            cursor.execute(
-                "INSERT INTO instructors (name, specialization, experience, rating, bio) VALUES (%s, %s, %s, %s, %s) RETURNING id",
-                (body_data.get('name'), body_data.get('specialization'), body_data.get('experience'),
-                 body_data.get('rating'), body_data.get('bio'))
-            )
+            query = f"""
+                INSERT INTO t_p22853855_driving_school_app.instructors 
+                (name, specialization, experience, rating, bio) 
+                VALUES ({escape_sql_string(body_data.get('name'))}, 
+                        {escape_sql_string(body_data.get('specialization'))}, 
+                        {body_data.get('experience', 0)}, 
+                        {body_data.get('rating', 0.0)}, 
+                        {escape_sql_string(body_data.get('bio'))}) 
+                RETURNING id
+            """
+            cursor.execute(query)
         elif table == 'enrollments':
-            cursor.execute(
-                "INSERT INTO enrollments (full_name, phone, email, course_id, message) VALUES (%s, %s, %s, %s, %s) RETURNING id",
-                (body_data.get('full_name'), body_data.get('phone'), body_data.get('email'), 
-                 body_data.get('course_id'), body_data.get('message'))
-            )
+            query = f"""
+                INSERT INTO t_p22853855_driving_school_app.enrollments 
+                (full_name, phone, email, course_id, message) 
+                VALUES ({escape_sql_string(body_data.get('full_name'))}, 
+                        {escape_sql_string(body_data.get('phone'))}, 
+                        {escape_sql_string(body_data.get('email'))}, 
+                        {body_data.get('course_id') if body_data.get('course_id') else 'NULL'}, 
+                        {escape_sql_string(body_data.get('message'))}) 
+                RETURNING id
+            """
+            cursor.execute(query)
         else:
             cursor.close()
             conn.close()
@@ -130,23 +155,41 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             }
         
         if table == 'courses':
-            cursor.execute(
-                "UPDATE courses SET title = %s, category = %s, description = %s, duration = %s, price = %s, features = %s WHERE id = %s",
-                (body_data.get('title'), body_data.get('category'), body_data.get('description'),
-                 body_data.get('duration'), body_data.get('price'), body_data.get('features', []), record_id)
-            )
+            features_str = "ARRAY[" + ", ".join([escape_sql_string(f) for f in body_data.get('features', [])]) + "]"
+            query = f"""
+                UPDATE t_p22853855_driving_school_app.courses 
+                SET title = {escape_sql_string(body_data.get('title'))}, 
+                    category = {escape_sql_string(body_data.get('category'))}, 
+                    description = {escape_sql_string(body_data.get('description'))}, 
+                    duration = {escape_sql_string(body_data.get('duration'))}, 
+                    price = {body_data.get('price', 0)}, 
+                    features = {features_str} 
+                WHERE id = {record_id}
+            """
+            cursor.execute(query)
         elif table == 'instructors':
-            cursor.execute(
-                "UPDATE instructors SET name = %s, specialization = %s, experience = %s, rating = %s, bio = %s WHERE id = %s",
-                (body_data.get('name'), body_data.get('specialization'), body_data.get('experience'),
-                 body_data.get('rating'), body_data.get('bio'), record_id)
-            )
+            query = f"""
+                UPDATE t_p22853855_driving_school_app.instructors 
+                SET name = {escape_sql_string(body_data.get('name'))}, 
+                    specialization = {escape_sql_string(body_data.get('specialization'))}, 
+                    experience = {body_data.get('experience', 0)}, 
+                    rating = {body_data.get('rating', 0.0)}, 
+                    bio = {escape_sql_string(body_data.get('bio'))} 
+                WHERE id = {record_id}
+            """
+            cursor.execute(query)
         elif table == 'enrollments':
-            cursor.execute(
-                "UPDATE enrollments SET full_name = %s, phone = %s, email = %s, course_id = %s, message = %s, status = %s WHERE id = %s",
-                (body_data.get('full_name'), body_data.get('phone'), body_data.get('email'),
-                 body_data.get('course_id'), body_data.get('message'), body_data.get('status'), record_id)
-            )
+            query = f"""
+                UPDATE t_p22853855_driving_school_app.enrollments 
+                SET full_name = {escape_sql_string(body_data.get('full_name'))}, 
+                    phone = {escape_sql_string(body_data.get('phone'))}, 
+                    email = {escape_sql_string(body_data.get('email'))}, 
+                    course_id = {body_data.get('course_id') if body_data.get('course_id') else 'NULL'}, 
+                    message = {escape_sql_string(body_data.get('message'))}, 
+                    status = {escape_sql_string(body_data.get('status'))} 
+                WHERE id = {record_id}
+            """
+            cursor.execute(query)
         else:
             cursor.close()
             conn.close()
@@ -182,7 +225,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
                 'isBase64Encoded': False
             }
         
-        cursor.execute(f"DELETE FROM {table} WHERE id = %s", (record_id,))
+        cursor.execute(f"DELETE FROM t_p22853855_driving_school_app.{table} WHERE id = {record_id}")
         conn.commit()
         cursor.close()
         conn.close()

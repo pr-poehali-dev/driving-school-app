@@ -6,6 +6,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 
@@ -49,6 +51,9 @@ const Admin = () => {
   const [instructors, setInstructors] = useState<Instructor[]>([]);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [loading, setLoading] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<any>(null);
+  const [editingTable, setEditingTable] = useState<string>('');
   const { toast } = useToast();
 
   useEffect(() => {
@@ -106,11 +111,13 @@ const Admin = () => {
   };
 
   const deleteRecord = async (table: string, id: number) => {
+    if (!confirm('Вы уверены, что хотите удалить эту запись?')) return;
+    
     try {
-      await fetch(API_URL, {
+      await fetch(`${API_URL}?table=${table}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ table, id })
+        body: JSON.stringify({ id })
       });
       
       toast({
@@ -123,6 +130,52 @@ const Admin = () => {
       toast({
         title: "Ошибка",
         description: "Не удалось удалить запись",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const openEditDialog = (table: string, item: any) => {
+    setEditingTable(table);
+    setEditingItem({ ...item });
+    setEditDialogOpen(true);
+  };
+
+  const openCreateDialog = (table: string) => {
+    setEditingTable(table);
+    if (table === 'courses') {
+      setEditingItem({ title: '', category: '', description: '', duration: '', price: 0, features: [] });
+    } else if (table === 'instructors') {
+      setEditingItem({ name: '', specialization: '', experience: 0, rating: 0, bio: '' });
+    } else if (table === 'enrollments') {
+      setEditingItem({ full_name: '', phone: '', email: '', course_id: null, message: '', status: 'new' });
+    }
+    setEditDialogOpen(true);
+  };
+
+  const saveRecord = async () => {
+    try {
+      const method = editingItem.id ? 'PUT' : 'POST';
+      const url = editingItem.id ? `${API_URL}?table=${editingTable}` : `${API_URL}?table=${editingTable}`;
+      
+      await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editingItem)
+      });
+      
+      toast({
+        title: "Успешно",
+        description: editingItem.id ? "Запись обновлена" : "Запись создана"
+      });
+      
+      setEditDialogOpen(false);
+      setEditingItem(null);
+      fetchData(editingTable);
+    } catch (error) {
+      toast({
+        title: "Ошибка",
+        description: "Не удалось сохранить запись",
         variant: "destructive"
       });
     }
@@ -226,9 +279,15 @@ const Admin = () => {
 
           <TabsContent value="enrollments">
             <Card>
-              <CardHeader>
-                <CardTitle>Заявки на обучение</CardTitle>
-                <CardDescription>Всего заявок: {enrollments.length}</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Заявки на обучение</CardTitle>
+                  <CardDescription>Всего заявок: {enrollments.length}</CardDescription>
+                </div>
+                <Button onClick={() => openCreateDialog('enrollments')} size="sm">
+                  <Icon name="Plus" size={16} className="mr-2" />
+                  Добавить заявку
+                </Button>
               </CardHeader>
               <CardContent>
                 {loading ? (
@@ -267,13 +326,22 @@ const Admin = () => {
                             </TableCell>
                             <TableCell>{new Date(enrollment.created_at).toLocaleDateString('ru-RU')}</TableCell>
                             <TableCell>
-                              <Button
-                                variant="destructive"
-                                size="sm"
-                                onClick={() => deleteRecord('enrollments', enrollment.id)}
-                              >
-                                <Icon name="Trash2" size={14} />
-                              </Button>
+                              <div className="flex gap-2">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => openEditDialog('enrollments', enrollment)}
+                                >
+                                  <Icon name="Pencil" size={14} />
+                                </Button>
+                                <Button
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => deleteRecord('enrollments', enrollment.id)}
+                                >
+                                  <Icon name="Trash2" size={14} />
+                                </Button>
+                              </div>
                             </TableCell>
                           </TableRow>
                         ))}
@@ -287,9 +355,15 @@ const Admin = () => {
 
           <TabsContent value="courses">
             <Card>
-              <CardHeader>
-                <CardTitle>Курсы обучения</CardTitle>
-                <CardDescription>Всего курсов: {courses.length}</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Курсы обучения</CardTitle>
+                  <CardDescription>Всего курсов: {courses.length}</CardDescription>
+                </div>
+                <Button onClick={() => openCreateDialog('courses')} size="sm">
+                  <Icon name="Plus" size={16} className="mr-2" />
+                  Добавить курс
+                </Button>
               </CardHeader>
               <CardContent>
                 {loading ? (
@@ -308,6 +382,7 @@ const Admin = () => {
                           <TableHead>Длительность</TableHead>
                           <TableHead>Цена</TableHead>
                           <TableHead>Особенности</TableHead>
+                          <TableHead>Действия</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -330,6 +405,24 @@ const Admin = () => {
                                 ))}
                               </div>
                             </TableCell>
+                            <TableCell>
+                              <div className="flex gap-2">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => openEditDialog('courses', course)}
+                                >
+                                  <Icon name="Pencil" size={14} />
+                                </Button>
+                                <Button
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => deleteRecord('courses', course.id)}
+                                >
+                                  <Icon name="Trash2" size={14} />
+                                </Button>
+                              </div>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -342,9 +435,15 @@ const Admin = () => {
 
           <TabsContent value="instructors">
             <Card>
-              <CardHeader>
-                <CardTitle>Инструкторы</CardTitle>
-                <CardDescription>Всего инструкторов: {instructors.length}</CardDescription>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle>Инструкторы</CardTitle>
+                  <CardDescription>Всего инструкторов: {instructors.length}</CardDescription>
+                </div>
+                <Button onClick={() => openCreateDialog('instructors')} size="sm">
+                  <Icon name="Plus" size={16} className="mr-2" />
+                  Добавить инструктора
+                </Button>
               </CardHeader>
               <CardContent>
                 {loading ? (
@@ -362,6 +461,7 @@ const Admin = () => {
                           <TableHead>Опыт (лет)</TableHead>
                           <TableHead>Рейтинг</TableHead>
                           <TableHead>Биография</TableHead>
+                          <TableHead>Действия</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -378,6 +478,24 @@ const Admin = () => {
                               </div>
                             </TableCell>
                             <TableCell className="max-w-md">{instructor.bio}</TableCell>
+                            <TableCell>
+                              <div className="flex gap-2">
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => openEditDialog('instructors', instructor)}
+                                >
+                                  <Icon name="Pencil" size={14} />
+                                </Button>
+                                <Button
+                                  variant="destructive"
+                                  size="sm"
+                                  onClick={() => deleteRecord('instructors', instructor.id)}
+                                >
+                                  <Icon name="Trash2" size={14} />
+                                </Button>
+                              </div>
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -389,6 +507,192 @@ const Admin = () => {
           </TabsContent>
         </Tabs>
       </div>
+
+      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>
+              {editingItem?.id ? 'Редактирование записи' : 'Создание записи'}
+            </DialogTitle>
+            <DialogDescription>
+              Таблица: {editingTable}
+            </DialogDescription>
+          </DialogHeader>
+          
+          {editingTable === 'courses' && editingItem && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="title">Название курса</Label>
+                <Input
+                  id="title"
+                  value={editingItem.title || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, title: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="category">Категория</Label>
+                <Input
+                  id="category"
+                  value={editingItem.category || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, category: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="description">Описание</Label>
+                <Textarea
+                  id="description"
+                  value={editingItem.description || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
+                  rows={3}
+                />
+              </div>
+              <div>
+                <Label htmlFor="duration">Длительность</Label>
+                <Input
+                  id="duration"
+                  value={editingItem.duration || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, duration: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="price">Цена (₽)</Label>
+                <Input
+                  id="price"
+                  type="number"
+                  value={editingItem.price || 0}
+                  onChange={(e) => setEditingItem({ ...editingItem, price: parseInt(e.target.value) || 0 })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="features">Особенности (через запятую)</Label>
+                <Textarea
+                  id="features"
+                  value={Array.isArray(editingItem.features) ? editingItem.features.join(', ') : ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, features: e.target.value.split(',').map(f => f.trim()) })}
+                  rows={3}
+                />
+              </div>
+            </div>
+          )}
+
+          {editingTable === 'instructors' && editingItem && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="name">ФИО инструктора</Label>
+                <Input
+                  id="name"
+                  value={editingItem.name || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="specialization">Специализация</Label>
+                <Input
+                  id="specialization"
+                  value={editingItem.specialization || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, specialization: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="experience">Опыт (лет)</Label>
+                <Input
+                  id="experience"
+                  type="number"
+                  value={editingItem.experience || 0}
+                  onChange={(e) => setEditingItem({ ...editingItem, experience: parseInt(e.target.value) || 0 })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="rating">Рейтинг (0-5)</Label>
+                <Input
+                  id="rating"
+                  type="number"
+                  step="0.1"
+                  min="0"
+                  max="5"
+                  value={editingItem.rating || 0}
+                  onChange={(e) => setEditingItem({ ...editingItem, rating: parseFloat(e.target.value) || 0 })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="bio">Биография</Label>
+                <Textarea
+                  id="bio"
+                  value={editingItem.bio || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, bio: e.target.value })}
+                  rows={4}
+                />
+              </div>
+            </div>
+          )}
+
+          {editingTable === 'enrollments' && editingItem && (
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="full_name">ФИО</Label>
+                <Input
+                  id="full_name"
+                  value={editingItem.full_name || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, full_name: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="phone">Телефон</Label>
+                <Input
+                  id="phone"
+                  value={editingItem.phone || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, phone: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  value={editingItem.email || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, email: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="course_id">ID курса</Label>
+                <Input
+                  id="course_id"
+                  type="number"
+                  value={editingItem.course_id || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, course_id: parseInt(e.target.value) || null })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="message">Сообщение</Label>
+                <Textarea
+                  id="message"
+                  value={editingItem.message || ''}
+                  onChange={(e) => setEditingItem({ ...editingItem, message: e.target.value })}
+                  rows={3}
+                />
+              </div>
+              <div>
+                <Label htmlFor="status">Статус</Label>
+                <Input
+                  id="status"
+                  value={editingItem.status || 'new'}
+                  onChange={(e) => setEditingItem({ ...editingItem, status: e.target.value })}
+                />
+              </div>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setEditDialogOpen(false)}>
+              Отмена
+            </Button>
+            <Button onClick={saveRecord} className="bg-primary hover:bg-primary/90">
+              <Icon name="Save" size={16} className="mr-2" />
+              Сохранить
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
