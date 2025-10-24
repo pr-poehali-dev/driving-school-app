@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import Icon from '@/components/ui/icon';
 import { useToast } from '@/hooks/use-toast';
 
@@ -38,13 +40,50 @@ interface Enrollment {
 }
 
 const API_URL = 'https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db';
+const ADMIN_PASSWORD = 'AutoProfi2024!';
 
 const Admin = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
   const [courses, setCourses] = useState<Course[]>([]);
   const [instructors, setInstructors] = useState<Instructor[]>([]);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const savedAuth = sessionStorage.getItem('adminAuth');
+    if (savedAuth === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      setIsAuthenticated(true);
+      sessionStorage.setItem('adminAuth', 'true');
+      toast({
+        title: "Успешно",
+        description: "Добро пожаловать в админ-панель"
+      });
+    } else {
+      toast({
+        title: "Ошибка",
+        description: "Неверный пароль",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('adminAuth');
+    toast({
+      title: "Выход",
+      description: "Вы вышли из системы"
+    });
+  };
 
   const fetchData = async (table: string) => {
     setLoading(true);
@@ -95,6 +134,57 @@ const Admin = () => {
     fetchData('enrollments');
   }, []);
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-muted to-background flex items-center justify-center p-4">
+        <Card className="w-full max-w-md">
+          <CardHeader className="text-center">
+            <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center mx-auto mb-4">
+              <Icon name="Lock" className="text-white" size={32} />
+            </div>
+            <CardTitle className="text-2xl">Вход в админ-панель</CardTitle>
+            <CardDescription>Введите пароль для доступа к системе управления</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <Label htmlFor="password">Пароль</Label>
+                <Input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Введите пароль"
+                  required
+                  autoFocus
+                />
+              </div>
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90">
+                <Icon name="LogIn" size={16} className="mr-2" />
+                Войти
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="w-full"
+                onClick={() => window.location.href = '/'}
+              >
+                <Icon name="Home" size={16} className="mr-2" />
+                На главную
+              </Button>
+            </form>
+            <div className="mt-6 p-3 bg-muted rounded-lg">
+              <p className="text-xs text-muted-foreground text-center">
+                <Icon name="Info" size={14} className="inline mr-1" />
+                Пароль для доступа: <strong>AutoProfi2024!</strong>
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-50 backdrop-blur-lg bg-background/80 border-b">
@@ -109,10 +199,16 @@ const Admin = () => {
                 <p className="text-xs text-muted-foreground">Управление данными автошколы</p>
               </div>
             </div>
-            <Button onClick={() => window.location.href = '/'} variant="outline">
-              <Icon name="Home" size={16} className="mr-2" />
-              На главную
-            </Button>
+            <div className="flex gap-2">
+              <Button onClick={handleLogout} variant="outline">
+                <Icon name="LogOut" size={16} className="mr-2" />
+                Выйти
+              </Button>
+              <Button onClick={() => window.location.href = '/'} variant="outline">
+                <Icon name="Home" size={16} className="mr-2" />
+                На главную
+              </Button>
+            </div>
           </div>
         </div>
       </header>
