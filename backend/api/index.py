@@ -1,6 +1,6 @@
 '''
-Business: API для получения данных из базы данных автошколы
-Args: event - dict с httpMethod, queryStringParameters
+Business: API для управления данными автошколы (CRUD операции)
+Args: event - dict с httpMethod, queryStringParameters, body
       context - объект с атрибутами request_id, function_name
 Returns: HTTP response dict с данными из БД
 '''
@@ -18,7 +18,7 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'statusCode': 200,
             'headers': {
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS',
+                'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
                 'Access-Control-Allow-Headers': 'Content-Type',
                 'Access-Control-Max-Age': '86400'
             },
@@ -75,23 +75,98 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
     elif method == 'POST':
         body_data = json.loads(event.get('body', '{}'))
         
-        if table == 'enrollments':
+        if table == 'courses':
+            cursor.execute(
+                "INSERT INTO courses (title, category, description, duration, price, features) VALUES (%s, %s, %s, %s, %s, %s) RETURNING id",
+                (body_data.get('title'), body_data.get('category'), body_data.get('description'),
+                 body_data.get('duration'), body_data.get('price'), body_data.get('features', []))
+            )
+        elif table == 'instructors':
+            cursor.execute(
+                "INSERT INTO instructors (name, specialization, experience, rating, bio) VALUES (%s, %s, %s, %s, %s) RETURNING id",
+                (body_data.get('name'), body_data.get('specialization'), body_data.get('experience'),
+                 body_data.get('rating'), body_data.get('bio'))
+            )
+        elif table == 'enrollments':
             cursor.execute(
                 "INSERT INTO enrollments (full_name, phone, email, course_id, message) VALUES (%s, %s, %s, %s, %s) RETURNING id",
                 (body_data.get('full_name'), body_data.get('phone'), body_data.get('email'), 
                  body_data.get('course_id'), body_data.get('message'))
             )
-            new_id = cursor.fetchone()[0]
-            conn.commit()
+        else:
             cursor.close()
             conn.close()
-            
             return {
-                'statusCode': 201,
+                'statusCode': 400,
                 'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-                'body': json.dumps({'id': new_id, 'message': 'Enrollment created'}),
+                'body': json.dumps({'error': 'Invalid table'}),
                 'isBase64Encoded': False
             }
+        
+        new_id = cursor.fetchone()[0]
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        return {
+            'statusCode': 201,
+            'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+            'body': json.dumps({'id': new_id, 'message': 'Record created'}),
+            'isBase64Encoded': False
+        }
+    
+    elif method == 'PUT':
+        body_data = json.loads(event.get('body', '{}'))
+        record_id = body_data.get('id')
+        
+        if not record_id:
+            cursor.close()
+            conn.close()
+            return {
+                'statusCode': 400,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({'error': 'Missing id'}),
+                'isBase64Encoded': False
+            }
+        
+        if table == 'courses':
+            cursor.execute(
+                "UPDATE courses SET title = %s, category = %s, description = %s, duration = %s, price = %s, features = %s WHERE id = %s",
+                (body_data.get('title'), body_data.get('category'), body_data.get('description'),
+                 body_data.get('duration'), body_data.get('price'), body_data.get('features', []), record_id)
+            )
+        elif table == 'instructors':
+            cursor.execute(
+                "UPDATE instructors SET name = %s, specialization = %s, experience = %s, rating = %s, bio = %s WHERE id = %s",
+                (body_data.get('name'), body_data.get('specialization'), body_data.get('experience'),
+                 body_data.get('rating'), body_data.get('bio'), record_id)
+            )
+        elif table == 'enrollments':
+            cursor.execute(
+                "UPDATE enrollments SET full_name = %s, phone = %s, email = %s, course_id = %s, message = %s, status = %s WHERE id = %s",
+                (body_data.get('full_name'), body_data.get('phone'), body_data.get('email'),
+                 body_data.get('course_id'), body_data.get('message'), body_data.get('status'), record_id)
+            )
+        else:
+            cursor.close()
+            conn.close()
+            return {
+                'statusCode': 400,
+                'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+                'body': json.dumps({'error': 'Invalid table'}),
+                'isBase64Encoded': False
+            }
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+        
+        return {
+            'statusCode': 200,
+            'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
+            'body': json.dumps({'message': 'Record updated'}),
+            'isBase64Encoded': False
+        }
     
     elif method == 'DELETE':
         body_data = json.loads(event.get('body', '{}'))
