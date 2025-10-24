@@ -131,7 +131,7 @@ const Index = () => {
                 <Icon name="Car" className="text-white" size={24} />
               </div>
               <div>
-                <h1 className="text-2xl font-bold gradient-text">АвтоПрофи</h1>
+                <h1 className="text-2xl font-bold text-black">АвтоПрофи</h1>
                 <p className="text-xs text-muted-foreground">Ваш путь к водительским правам</p>
               </div>
             </div>
@@ -147,8 +147,7 @@ const Index = () => {
 
       <section className="py-20 px-4 bg-muted">
         <div className="container mx-auto text-center animate-fade-in">
-          <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">Лицензия ГИБДД №12345</Badge>
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 gradient-text">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 text-black">
             Научим водить с нуля
           </h2>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
