@@ -140,8 +140,8 @@ const Index = () => {
             Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 hover-scale text-lg px-8 py-6 h-auto" onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}>
-              <Icon name="Rocket" size={24} className="mr-3" />
+            <Button size="lg" className="bg-primary hover:bg-primary/90 hover-scale text-2xl px-12 py-8 h-auto" onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}>
+              <Icon name="Rocket" size={32} className="mr-4" />
               Выбрать курс
             </Button>
           </div>
