@@ -109,28 +109,27 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
-      <header className="sticky top-0 z-50 bg-gradient-to-r from-primary to-primary/90 shadow-lg">
-        <div className="container mx-auto px-4 py-4">
+      <header className="sticky top-0 z-50 backdrop-blur-md bg-background/80 border-b border-border/50">
+        <div className="container mx-auto px-4 py-5">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                <Icon name="Car" className="text-white" size={24} />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-white">АвтоПрофи</h1>
-                <p className="text-xs text-white/80">Профессиональное обучение вождению</p>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3 px-4 py-2 bg-primary/10 rounded-full">
+                <Icon name="Car" className="text-primary" size={24} />
+                <h1 className="text-xl font-bold">АвтоПрофи</h1>
               </div>
             </div>
-            <nav className="hidden md:flex items-center gap-6">
-              <a href="#courses" className="text-sm font-medium text-white/90 hover:text-white transition-colors">Курсы</a>
-              <a href="#instructors" className="text-sm font-medium text-white/90 hover:text-white transition-colors">Инструкторы</a>
-              <a href="#contact" className="text-sm font-medium text-white/90 hover:text-white transition-colors">Контакты</a>
+            <nav className="hidden md:flex items-center gap-1">
+              <a href="#courses" className="px-4 py-2 rounded-lg text-sm font-medium hover:bg-muted transition-colors">Курсы</a>
+              <a href="#instructors" className="px-4 py-2 rounded-lg text-sm font-medium hover:bg-muted transition-colors">Инструкторы</a>
+              <a href="#contact" className="px-4 py-2 rounded-lg text-sm font-medium hover:bg-muted transition-colors">Контакты</a>
+              <div className="w-px h-6 bg-border mx-2"></div>
               <Button 
-                variant="secondary" 
+                variant="ghost" 
                 size="sm"
                 onClick={() => window.location.href = '/admin'}
               >
-                Админ-панель
+                <Icon name="Settings" size={16} className="mr-2" />
+                Админ
               </Button>
             </nav>
           </div>
