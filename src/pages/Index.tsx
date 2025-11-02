@@ -120,34 +120,13 @@ const Index = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    try {
-      const response = await fetch(`${API_URL}?table=enrollments`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          course_id: selectedCourse?.id
-        })
-      });
+    toast({
+      title: "Заявка отправлена!",
+      description: "Мы свяжемся с вами в ближайшее время.",
+    });
 
-      if (response.ok) {
-        toast({
-          title: "Заявка отправлена!",
-          description: "Мы свяжемся с вами в ближайшее время.",
-        });
-
-        setFormData({ full_name: '', phone: '', email: '', message: '' });
-        setIsEnrollDialogOpen(false);
-      } else {
-        throw new Error('Failed to submit');
-      }
-    } catch (error) {
-      toast({
-        title: "Ошибка",
-        description: "Не удалось отправить заявку. Попробуйте позже.",
-        variant: "destructive"
-      });
-    }
+    setFormData({ full_name: '', phone: '', email: '', message: '' });
+    setIsEnrollDialogOpen(false);
   };
 
   return (
