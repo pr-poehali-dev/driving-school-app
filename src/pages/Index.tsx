@@ -184,6 +184,72 @@ const Index = () => {
             <p className="text-muted-foreground">Выберите подходящую категорию обучения</p>
           </div>
 
+          <Card className="mb-12 border-2 border-primary bg-gradient-to-br from-primary/5 to-primary/10">
+            <CardHeader>
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center">
+                  <Icon name="GraduationCap" className="text-white" size={32} />
+                </div>
+                <div>
+                  <CardTitle className="text-3xl mb-2">Пробное занятие</CardTitle>
+                  <CardDescription className="text-lg">Попробуйте вождение бесплатно перед записью на курс</CardDescription>
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <Icon name="Clock" className="text-primary mt-1" size={20} />
+                    <div>
+                      <p className="font-semibold">45 минут</p>
+                      <p className="text-sm text-muted-foreground">Первое занятие за рулем</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Icon name="MapPin" className="text-primary mt-1" size={20} />
+                    <div>
+                      <p className="font-semibold">Удобное место встречи</p>
+                      <p className="text-sm text-muted-foreground">Выберите район для начала занятия</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Icon name="UserCheck" className="text-primary mt-1" size={20} />
+                    <div>
+                      <p className="font-semibold">Опытный инструктор</p>
+                      <p className="text-sm text-muted-foreground">Познакомитесь с преподавателем</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex flex-col justify-center items-center bg-white rounded-lg p-6">
+                  <div className="text-center mb-6">
+                    <p className="text-5xl font-bold text-primary mb-2">БЕСПЛАТНО</p>
+                    <p className="text-sm text-muted-foreground">Первое занятие — в подарок</p>
+                  </div>
+                  <Button 
+                    size="lg" 
+                    className="w-full text-lg py-6"
+                    onClick={() => {
+                      setSelectedCourse({
+                        id: 0,
+                        title: 'Пробное занятие',
+                        category: 'Пробный урок',
+                        description: 'Бесплатное пробное занятие',
+                        duration: '45 минут',
+                        price: 0,
+                        features: []
+                      });
+                      setIsEnrollDialogOpen(true);
+                    }}
+                  >
+                    <Icon name="Calendar" className="mr-2" size={20} />
+                    Записаться на пробное занятие
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
           <div className="grid md:grid-cols-3 gap-8">
             {courses.map((course) => (
               <Card key={course.id} className="hover-scale flex flex-col">
