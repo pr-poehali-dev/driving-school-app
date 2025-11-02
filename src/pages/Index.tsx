@@ -274,37 +274,66 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="instructors" className="py-20 px-4 bg-muted/30">
-        <div className="container mx-auto">
-          <div className="text-center mb-12">
+      <section id="instructors" className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Наши инструкторы</h2>
-            <p className="text-muted-foreground">Профессионалы с многолетним опытом</p>
+            <p className="text-xl text-muted-foreground">Команда профессионалов с многолетним опытом обучения вождению</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {instructors.map((instructor) => (
-              <Card key={instructor.id} className="hover-scale">
-                <CardHeader>
-                  <div className="w-24 h-24 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
-                    <Icon name="UserCircle" className="text-primary" size={64} />
+              <Card key={instructor.id} className="overflow-hidden border-2 hover:border-primary transition-all hover:shadow-xl">
+                <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-8">
+                  <div className="w-32 h-32 rounded-full bg-white shadow-lg flex items-center justify-center mx-auto">
+                    <Icon name="UserCircle" className="text-primary" size={80} />
                   </div>
-                  <CardTitle className="text-center">{instructor.name}</CardTitle>
-                  <CardDescription className="text-center">{instructor.specialization}</CardDescription>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <div className="flex justify-center items-center gap-4 mb-4">
-                    <div className="flex items-center gap-1">
-                      <Icon name="Star" className="text-yellow-500 fill-yellow-500" size={18} />
-                      <span className="font-semibold">{instructor.rating}</span>
+                </div>
+                <CardContent className="pt-6 pb-8 text-center">
+                  <h3 className="text-2xl font-bold mb-2">{instructor.name}</h3>
+                  <p className="text-primary font-semibold mb-4">{instructor.specialization}</p>
+                  
+                  <div className="flex justify-center items-center gap-6 mb-6 pb-6 border-b">
+                    <div className="text-center">
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <Icon name="Star" className="text-yellow-500 fill-yellow-500" size={20} />
+                        <span className="text-2xl font-bold">{instructor.rating}</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">Рейтинг</p>
                     </div>
-                    <div className="text-sm text-muted-foreground">
-                      {instructor.experience} лет опыта
+                    <div className="w-px h-12 bg-border"></div>
+                    <div className="text-center">
+                      <p className="text-2xl font-bold mb-1">{instructor.experience}</p>
+                      <p className="text-xs text-muted-foreground">лет опыта</p>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{instructor.bio}</p>
+                  
+                  <p className="text-sm text-muted-foreground leading-relaxed">{instructor.bio}</p>
                 </CardContent>
               </Card>
             ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <p className="text-muted-foreground mb-4">Все наши инструкторы имеют высшую категорию и сертификаты</p>
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => {
+                setSelectedCourse({
+                  id: 0,
+                  title: 'Пробное занятие',
+                  category: 'Пробный урок',
+                  description: 'Познакомьтесь с инструктором бесплатно',
+                  duration: '45 минут',
+                  price: 0,
+                  features: []
+                });
+                setIsEnrollDialogOpen(true);
+              }}
+            >
+              Познакомиться с инструктором
+            </Button>
           </div>
         </div>
       </section>
