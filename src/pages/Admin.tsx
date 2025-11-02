@@ -8,7 +8,7 @@ import EnrollmentsTab from '@/components/admin/EnrollmentsTab';
 import CoursesTab from '@/components/admin/CoursesTab';
 import InstructorsTab from '@/components/admin/InstructorsTab';
 import EditDialog from '@/components/admin/EditDialog';
-import { Course, Instructor, Enrollment, API_URL } from '@/components/admin/types';
+import { Course, Instructor, Enrollment } from '@/components/admin/types';
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

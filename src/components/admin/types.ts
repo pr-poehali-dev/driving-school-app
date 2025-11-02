@@ -28,5 +28,4 @@ export interface Enrollment {
   created_at?: string;
 }
 
-export const API_URL = 'https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db';
 export const ADMIN_PASSWORD = 'AutoProfi2024!';

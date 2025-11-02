@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -27,8 +27,6 @@ interface Instructor {
   rating: number;
   bio: string;
 }
-
-const API_URL = 'https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db';
 
 const Index = () => {
   const [courses, setCourses] = useState<Course[]>([
@@ -112,30 +110,7 @@ const Index = () => {
     message: ''
   });
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const response = await fetch(`${API_URL}?table=courses`);
-        const data = await response.json();
-        setCourses(data);
-      } catch (error) {
-        console.error('Failed to fetch courses:', error);
-      }
-    };
 
-    const fetchInstructors = async () => {
-      try {
-        const response = await fetch(`${API_URL}?table=instructors`);
-        const data = await response.json();
-        setInstructors(data);
-      } catch (error) {
-        console.error('Failed to fetch instructors:', error);
-      }
-    };
-
-    fetchCourses();
-    fetchInstructors();
-  }, []);
 
   const handleEnroll = (course: Course) => {
     setSelectedCourse(course);
