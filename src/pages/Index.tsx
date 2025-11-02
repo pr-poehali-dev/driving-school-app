@@ -146,37 +146,15 @@ const Index = () => {
                 Научим водить с нуля
               </h2>
               <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику. 
-                Получите права быстро и уверенно!
+                Профессиональное обучение с опытными инструкторами
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Button 
-                  size="lg" 
-                  className="text-lg px-8 py-6 h-auto"
-                  onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Выбрать курс
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  className="text-lg px-8 py-6 h-auto"
-                  onClick={() => {
-                    setSelectedCourse({
-                      id: 0,
-                      title: 'Пробное занятие',
-                      category: 'Пробный урок',
-                      description: 'Бесплатное пробное занятие',
-                      duration: '45 минут',
-                      price: 0,
-                      features: []
-                    });
-                    setIsEnrollDialogOpen(true);
-                  }}
-                >
-                  Пробный урок
-                </Button>
-              </div>
+              <Button 
+                size="lg" 
+                className="text-lg px-8 py-6 h-auto"
+                onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                Выбрать курс
+              </Button>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
