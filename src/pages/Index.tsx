@@ -405,31 +405,6 @@ const Index = () => {
               </CardContent>
             </Card>
           </div>
-
-          <Card className="border-2 border-primary bg-gradient-to-br from-primary/5 to-primary/10">
-            <CardContent className="py-10 px-6">
-              <h3 className="text-2xl font-bold mb-3">Не нашли ответ на свой вопрос?</h3>
-              <p className="text-muted-foreground mb-6">Запишитесь на бесплатную консультацию</p>
-              <Button 
-                size="lg"
-                className="text-lg py-6 px-10"
-                onClick={() => {
-                  setSelectedCourse({
-                    id: 0,
-                    title: 'Консультация',
-                    category: 'Консультация',
-                    description: 'Бесплатная консультация по выбору курса',
-                    duration: '30 минут',
-                    price: 0,
-                    features: []
-                  });
-                  setIsEnrollDialogOpen(true);
-                }}
-              >
-                Получить консультацию бесплатно
-              </Button>
-            </CardContent>
-          </Card>
         </div>
       </section>
 
