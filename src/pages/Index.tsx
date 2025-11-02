@@ -315,31 +315,60 @@ const Index = () => {
             ))}
           </div>
 
-          <Card className="bg-gradient-to-r from-primary to-primary/80 border-0">
-            <CardContent className="py-8 px-6 text-center text-white">
-              <h3 className="text-2xl font-bold mb-3">Хотите познакомиться с инструктором?</h3>
-              <p className="mb-6 opacity-90">Запишитесь на бесплатное пробное занятие прямо сейчас</p>
-              <Button 
-                size="lg"
-                variant="secondary"
-                className="text-lg py-6 px-10"
-                onClick={() => {
-                  setSelectedCourse({
-                    id: 0,
-                    title: 'Пробное занятие',
-                    category: 'Пробный урок',
-                    description: 'Познакомьтесь с инструктором бесплатно',
-                    duration: '45 минут',
-                    price: 0,
-                    features: []
-                  });
-                  setIsEnrollDialogOpen(true);
-                }}
-              >
-                Записаться на пробное занятие
-              </Button>
-            </CardContent>
-          </Card>
+          <div className="grid md:grid-cols-2 gap-6">
+            <Card className="border-2 border-primary">
+              <CardContent className="p-8 flex flex-col items-center justify-center text-center h-full">
+                <Icon name="Calendar" className="text-primary mb-4" size={48} />
+                <h3 className="text-xl font-bold mb-3">Пробное занятие бесплатно</h3>
+                <p className="text-muted-foreground mb-5">Познакомьтесь с инструктором и оцените качество обучения</p>
+                <Button 
+                  size="lg"
+                  className="w-full"
+                  onClick={() => {
+                    setSelectedCourse({
+                      id: 0,
+                      title: 'Пробное занятие',
+                      category: 'Пробный урок',
+                      description: 'Познакомьтесь с инструктором бесплатно',
+                      duration: '45 минут',
+                      price: 0,
+                      features: []
+                    });
+                    setIsEnrollDialogOpen(true);
+                  }}
+                >
+                  Записаться на пробное
+                </Button>
+              </CardContent>
+            </Card>
+            
+            <Card className="border-2">
+              <CardContent className="p-8 flex flex-col items-center justify-center text-center h-full">
+                <Icon name="MessageCircle" className="text-primary mb-4" size={48} />
+                <h3 className="text-xl font-bold mb-3">Консультация по выбору курса</h3>
+                <p className="text-muted-foreground mb-5">Поможем подобрать программу обучения под ваши цели</p>
+                <Button 
+                  size="lg"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => {
+                    setSelectedCourse({
+                      id: 0,
+                      title: 'Консультация',
+                      category: 'Консультация',
+                      description: 'Бесплатная консультация по выбору курса',
+                      duration: '30 минут',
+                      price: 0,
+                      features: []
+                    });
+                    setIsEnrollDialogOpen(true);
+                  }}
+                >
+                  Получить консультацию
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
