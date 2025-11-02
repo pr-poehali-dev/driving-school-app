@@ -138,48 +138,49 @@ const Index = () => {
         </div>
       </header>
 
-      <section className="py-20 px-4 bg-muted">
-        <div className="container mx-auto text-center animate-fade-in">
-          <h2 className="text-5xl md:text-6xl font-bold mb-6 text-black">
-            Научим водить с нуля
-          </h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 hover-scale text-2xl px-12 py-8 h-auto" onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}>
-              Выбрать курс
+      <section className="relative py-24 px-4 bg-gradient-to-br from-primary/5 via-background to-primary/10 overflow-hidden">
+        <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+        <div className="container mx-auto text-center relative z-10 animate-fade-in">
+          <div className="max-w-4xl mx-auto mb-12">
+            <h2 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+              Научим водить с нуля
+            </h2>
+            <p className="text-xl md:text-2xl text-muted-foreground mb-10">
+              Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику
+            </p>
+            <Button 
+              size="lg" 
+              className="text-xl px-10 py-7 h-auto shadow-lg hover:shadow-2xl transition-all"
+              onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              Выбрать курс обучения
             </Button>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mt-16 max-w-4xl mx-auto">
-            <Card className="hover-scale border-2 hover:border-primary transition-all">
-              <CardHeader>
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Icon name="Award" className="text-primary" size={28} />
-                </div>
-                <CardTitle className="text-2xl">15 лет</CardTitle>
-                <CardDescription>на рынке обучения</CardDescription>
-              </CardHeader>
-            </Card>
-            <Card className="hover-scale border-2 hover:border-secondary transition-all">
-              <CardHeader>
-                <div className="w-14 h-14 rounded-full bg-secondary/10 flex items-center justify-center mx-auto mb-4">
-                  <Icon name="Users" className="text-secondary" size={28} />
-                </div>
-                <CardTitle className="text-2xl">5000+</CardTitle>
-                <CardDescription>выпускников</CardDescription>
-              </CardHeader>
-            </Card>
-            <Card className="hover-scale border-2 hover:border-primary transition-all">
-              <CardHeader>
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                  <Icon name="TrendingUp" className="text-primary" size={28} />
-                </div>
-                <CardTitle className="text-2xl">96%</CardTitle>
-                <CardDescription>сдают с первого раза</CardDescription>
-              </CardHeader>
-            </Card>
+          <div className="grid md:grid-cols-3 gap-8 mt-20 max-w-5xl mx-auto">
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center mx-auto mb-6">
+                <Icon name="Award" className="text-white" size={36} />
+              </div>
+              <p className="text-5xl font-bold text-primary mb-2">15</p>
+              <p className="text-muted-foreground">лет на рынке обучения</p>
+            </div>
+            
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-secondary to-secondary/70 flex items-center justify-center mx-auto mb-6">
+                <Icon name="Users" className="text-white" size={36} />
+              </div>
+              <p className="text-5xl font-bold text-secondary mb-2">5000+</p>
+              <p className="text-muted-foreground">довольных выпускников</p>
+            </div>
+            
+            <div className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all hover:-translate-y-2">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center mx-auto mb-6">
+                <Icon name="TrendingUp" className="text-white" size={36} />
+              </div>
+              <p className="text-5xl font-bold text-primary mb-2">96%</p>
+              <p className="text-muted-foreground">сдают экзамен с первого раза</p>
+            </div>
           </div>
         </div>
       </section>
