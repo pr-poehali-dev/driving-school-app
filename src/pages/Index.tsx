@@ -138,54 +138,69 @@ const Index = () => {
         </div>
       </header>
 
-      <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/30">
-        <div className="container mx-auto max-w-6xl animate-fade-in">
-          <Card className="overflow-hidden border-2 border-primary">
-            <div className="grid md:grid-cols-2">
-              <div className="bg-gradient-to-br from-primary to-primary/80 text-white p-12 flex flex-col justify-center">
-                <h2 className="text-5xl font-bold mb-6">
-                  Научим водить с нуля
-                </h2>
-                <p className="text-lg mb-8 opacity-90">
-                  Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику
-                </p>
-                <Button 
-                  size="lg" 
-                  variant="secondary"
-                  className="text-lg px-8 py-6 h-auto w-fit"
-                  onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Выбрать курс
-                </Button>
-              </div>
-              
-              <div className="bg-white p-12">
-                <h3 className="text-2xl font-bold mb-8 text-center">Наши достижения</h3>
-                <div className="grid grid-cols-2 gap-6">
-                  <div className="text-center p-4 bg-muted/30 rounded-lg">
-                    <Icon name="Award" className="text-primary mx-auto mb-3" size={36} />
-                    <p className="text-3xl font-bold mb-1">15 лет</p>
-                    <p className="text-sm text-muted-foreground">опыта</p>
-                  </div>
-                  <div className="text-center p-4 bg-muted/30 rounded-lg">
-                    <Icon name="Users" className="text-primary mx-auto mb-3" size={36} />
-                    <p className="text-3xl font-bold mb-1">5000+</p>
-                    <p className="text-sm text-muted-foreground">выпускников</p>
-                  </div>
-                  <div className="text-center p-4 bg-muted/30 rounded-lg">
-                    <Icon name="TrendingUp" className="text-primary mx-auto mb-3" size={36} />
-                    <p className="text-3xl font-bold mb-1">96%</p>
-                    <p className="text-sm text-muted-foreground">сдают с 1 раза</p>
-                  </div>
-                  <div className="text-center p-4 bg-muted/30 rounded-lg">
-                    <Icon name="Car" className="text-primary mx-auto mb-3" size={36} />
-                    <p className="text-3xl font-bold mb-1">20+</p>
-                    <p className="text-sm text-muted-foreground">автомобилей</p>
-                  </div>
-                </div>
-              </div>
+      <section className="relative py-32 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10" />
+        <div className="container mx-auto max-w-4xl relative z-10 animate-fade-in">
+          <div className="text-center mb-16">
+            <div className="inline-block bg-primary/10 text-primary px-6 py-2 rounded-full text-sm font-semibold mb-6">
+              🚗 Автошкола №1 в вашем городе
             </div>
-          </Card>
+            <h2 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
+              Научим водить<br />с нуля
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+              Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику
+            </p>
+            <div className="flex flex-wrap gap-4 justify-center">
+              <Button 
+                size="lg" 
+                className="text-lg px-10 py-7 h-auto shadow-lg hover:shadow-xl transition-shadow"
+                onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <Icon name="GraduationCap" className="mr-2" size={20} />
+                Начать обучение
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="text-lg px-10 py-7 h-auto"
+                onClick={() => {
+                  setSelectedCourse({
+                    id: 0,
+                    title: 'Пробное занятие',
+                    category: 'Пробный урок',
+                    description: 'Бесплатное пробное занятие',
+                    duration: '45 минут',
+                    price: 0,
+                    features: []
+                  });
+                  setIsEnrollDialogOpen(true);
+                }}
+              >
+                <Icon name="Sparkles" className="mr-2" size={20} />
+                Пробный урок
+              </Button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <Card className="text-center p-6 bg-white/50 backdrop-blur-sm border-2 hover:border-primary transition-colors">
+              <p className="text-4xl font-bold text-primary mb-2">15</p>
+              <p className="text-sm text-muted-foreground">лет опыта</p>
+            </Card>
+            <Card className="text-center p-6 bg-white/50 backdrop-blur-sm border-2 hover:border-primary transition-colors">
+              <p className="text-4xl font-bold text-primary mb-2">5000+</p>
+              <p className="text-sm text-muted-foreground">выпускников</p>
+            </Card>
+            <Card className="text-center p-6 bg-white/50 backdrop-blur-sm border-2 hover:border-primary transition-colors">
+              <p className="text-4xl font-bold text-primary mb-2">96%</p>
+              <p className="text-sm text-muted-foreground">сдают с 1 раза</p>
+            </Card>
+            <Card className="text-center p-6 bg-white/50 backdrop-blur-sm border-2 hover:border-primary transition-colors">
+              <p className="text-4xl font-bold text-primary mb-2">20+</p>
+              <p className="text-sm text-muted-foreground">автомобилей</p>
+            </Card>
+          </div>
         </div>
       </section>
 
