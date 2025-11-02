@@ -222,10 +222,6 @@ const Index = () => {
                   </div>
                 </div>
                 <div className="flex flex-col justify-center items-center bg-white rounded-lg p-6 border-2 border-primary shadow-lg">
-                  <div className="text-center mb-6">
-                    <p className="text-5xl font-bold text-primary mb-2">БЕСПЛАТНО</p>
-                    <p className="text-sm text-muted-foreground">Первое занятие — в подарок</p>
-                  </div>
                   <Button 
                     size="lg" 
                     className="w-full text-lg py-6"
