@@ -309,33 +309,49 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="contact" className="py-20 px-4">
-        <div className="container mx-auto max-w-4xl">
-          <Card className="border-2">
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl">Остались вопросы?</CardTitle>
-              <CardDescription>Свяжитесь с нами любым удобным способом</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div className="flex flex-col items-center text-center p-4 rounded-lg bg-muted/50">
-                  <Icon name="Phone" className="text-primary mb-3" size={32} />
-                  <h3 className="font-semibold mb-2">Телефон</h3>
-                  <p className="text-sm text-muted-foreground">+7 (495) 123-45-67</p>
+      <section id="contact" className="py-20 px-4 bg-gradient-to-b from-muted/20 to-background">
+        <div className="container mx-auto max-w-5xl">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">Свяжитесь с нами</h2>
+            <p className="text-lg text-muted-foreground">Мы всегда на связи и готовы ответить на ваши вопросы</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="text-center hover-scale border-2 hover:border-primary transition-all">
+              <CardContent className="pt-8 pb-6">
+                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <Icon name="Phone" className="text-primary" size={40} />
                 </div>
-                <div className="flex flex-col items-center text-center p-4 rounded-lg bg-muted/50">
-                  <Icon name="Mail" className="text-primary mb-3" size={32} />
-                  <h3 className="font-semibold mb-2">Email</h3>
-                  <p className="text-sm text-muted-foreground">info@autoprofi.ru</p>
+                <h3 className="text-xl font-bold mb-3">Позвоните нам</h3>
+                <a href="tel:+74951234567" className="text-lg text-primary hover:underline font-semibold">
+                  +7 (495) 123-45-67
+                </a>
+                <p className="text-sm text-muted-foreground mt-2">Ежедневно с 9:00 до 21:00</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center hover-scale border-2 hover:border-primary transition-all">
+              <CardContent className="pt-8 pb-6">
+                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <Icon name="Mail" className="text-primary" size={40} />
                 </div>
-                <div className="flex flex-col items-center text-center p-4 rounded-lg bg-muted/50">
-                  <Icon name="MapPin" className="text-primary mb-3" size={32} />
-                  <h3 className="font-semibold mb-2">Адрес</h3>
-                  <p className="text-sm text-muted-foreground">Москва, ул. Примерная, 123</p>
+                <h3 className="text-xl font-bold mb-3">Напишите письмо</h3>
+                <a href="mailto:info@autoprofi.ru" className="text-lg text-primary hover:underline font-semibold">
+                  info@autoprofi.ru
+                </a>
+                <p className="text-sm text-muted-foreground mt-2">Ответим в течение 2 часов</p>
+              </CardContent>
+            </Card>
+            <Card className="text-center hover-scale border-2 hover:border-primary transition-all">
+              <CardContent className="pt-8 pb-6">
+                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <Icon name="MapPin" className="text-primary" size={40} />
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+                <h3 className="text-xl font-bold mb-3">Приезжайте к нам</h3>
+                <p className="text-lg font-semibold mb-1">Москва</p>
+                <p className="text-sm text-muted-foreground">ул. Примерная, 123</p>
+                <p className="text-sm text-muted-foreground mt-2">Пн-Пт: 9:00-21:00</p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </section>
 
