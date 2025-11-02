@@ -201,7 +201,7 @@ const Index = () => {
                   <p className="font-bold text-lg mb-1">Удобное место</p>
                   <p className="text-sm text-muted-foreground">Встреча в вашем районе</p>
                 </div>
-                <div className="text-center p-6 bg-muted/30 rounded-lg">
+                <div className="text-center p-6 bg-muted/30 rounded-lg border-2 border-muted">
                   <Icon name="UserCheck" className="text-primary mx-auto mb-3" size={40} />
                   <p className="font-bold text-lg mb-1">Опытный инструктор</p>
                   <p className="text-sm text-muted-foreground">Профессиональное обучение</p>
