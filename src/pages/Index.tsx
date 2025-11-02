@@ -274,49 +274,72 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="instructors" className="py-20 px-4 bg-gradient-to-b from-background to-muted/30">
-        <div className="container mx-auto max-w-5xl">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Познакомьтесь с командой</h2>
-            <p className="text-lg text-muted-foreground">Опытные инструкторы, которые сделают ваше обучение комфортным и эффективным</p>
+      <section id="instructors" className="py-20 px-4 bg-muted/20">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold mb-4">Наши инструкторы</h2>
+            <p className="text-xl text-muted-foreground">Профессионалы своего дела</p>
           </div>
 
-          <div className="space-y-6">
-            {instructors.map((instructor, index) => (
-              <Card key={instructor.id} className="overflow-hidden hover-scale border-2">
-                <div className={`grid md:grid-cols-[200px_1fr] gap-6 ${index % 2 === 1 ? 'md:grid-cols-[1fr_200px]' : ''}`}>
-                  <div className={`bg-gradient-to-br from-primary/20 to-primary/5 flex items-center justify-center p-8 ${index % 2 === 1 ? 'md:order-2' : ''}`}>
-                    <div className="w-36 h-36 rounded-full bg-white shadow-lg flex items-center justify-center">
-                      <Icon name="UserCircle" className="text-primary" size={90} />
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {instructors.map((instructor) => (
+              <Card key={instructor.id} className="text-center hover-scale border-2 hover:shadow-2xl transition-all">
+                <CardContent className="pt-10 pb-8">
+                  <div className="relative w-28 h-28 mx-auto mb-6">
+                    <div className="absolute inset-0 bg-primary/20 rounded-full"></div>
+                    <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
+                      <Icon name="User" className="text-primary" size={56} />
                     </div>
                   </div>
-                  <CardContent className={`py-8 ${index % 2 === 1 ? 'md:order-1 md:pr-8' : 'md:pl-8'}`}>
-                    <div className="flex flex-wrap items-center gap-4 mb-3">
-                      <h3 className="text-2xl font-bold">{instructor.name}</h3>
-                      <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-semibold">
-                        {instructor.specialization}
-                      </span>
-                    </div>
-                    
-                    <div className="flex gap-6 mb-4">
-                      <div className="flex items-center gap-2">
-                        <Icon name="Star" className="text-yellow-500 fill-yellow-500" size={20} />
-                        <span className="font-bold text-lg">{instructor.rating}</span>
-                        <span className="text-sm text-muted-foreground">рейтинг</span>
+                  
+                  <h3 className="text-xl font-bold mb-1">{instructor.name}</h3>
+                  <p className="text-sm text-primary font-semibold mb-6">{instructor.specialization}</p>
+                  
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="bg-muted/50 rounded-lg p-3">
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <Icon name="Star" className="text-yellow-500 fill-yellow-500" size={16} />
+                        <span className="text-xl font-bold">{instructor.rating}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Icon name="Award" className="text-primary" size={20} />
-                        <span className="font-bold text-lg">{instructor.experience}</span>
-                        <span className="text-sm text-muted-foreground">лет опыта</span>
-                      </div>
+                      <p className="text-xs text-muted-foreground">Рейтинг</p>
                     </div>
-                    
-                    <p className="text-muted-foreground leading-relaxed">{instructor.bio}</p>
-                  </CardContent>
-                </div>
+                    <div className="bg-muted/50 rounded-lg p-3">
+                      <p className="text-xl font-bold mb-1">{instructor.experience}</p>
+                      <p className="text-xs text-muted-foreground">Лет опыта</p>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm text-muted-foreground">{instructor.bio}</p>
+                </CardContent>
               </Card>
             ))}
           </div>
+
+          <Card className="bg-gradient-to-r from-primary to-primary/80 border-0">
+            <CardContent className="py-8 px-6 text-center text-white">
+              <h3 className="text-2xl font-bold mb-3">Хотите познакомиться с инструктором?</h3>
+              <p className="mb-6 opacity-90">Запишитесь на бесплатное пробное занятие прямо сейчас</p>
+              <Button 
+                size="lg"
+                variant="secondary"
+                className="text-lg py-6 px-10"
+                onClick={() => {
+                  setSelectedCourse({
+                    id: 0,
+                    title: 'Пробное занятие',
+                    category: 'Пробный урок',
+                    description: 'Познакомьтесь с инструктором бесплатно',
+                    duration: '45 минут',
+                    price: 0,
+                    features: []
+                  });
+                  setIsEnrollDialogOpen(true);
+                }}
+              >
+                Записаться на пробное занятие
+              </Button>
+            </CardContent>
+          </Card>
         </div>
       </section>
 
