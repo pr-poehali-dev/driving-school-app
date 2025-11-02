@@ -397,7 +397,7 @@ const Index = () => {
               </Card>
             </a>
             
-            <Card className="border-2 h-full">
+            <Card className="hover-scale border-2 hover:border-primary transition-all h-full">
               <CardContent className="pt-8 pb-6">
                 <Icon name="MapPin" className="text-primary mx-auto mb-4" size={48} />
                 <h3 className="font-bold text-xl mb-2">Москва</h3>
@@ -408,9 +408,40 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="bg-secondary py-8 px-4 mt-20">
-        <div className="container mx-auto text-center">
-          <p className="text-white">© 2024 АвтоПрофи. Все права защищены.</p>
+      <footer className="bg-gradient-to-r from-secondary to-secondary/90 py-12 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <div className="grid md:grid-cols-3 gap-8 mb-8">
+            <div className="text-white">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                  <Icon name="Car" className="text-white" size={20} />
+                </div>
+                <h3 className="text-xl font-bold">АвтоПрофи</h3>
+              </div>
+              <p className="text-sm text-white/80">Профессиональное обучение вождению с 2010 года</p>
+            </div>
+            
+            <div className="text-white">
+              <h4 className="font-bold mb-3">Контакты</h4>
+              <div className="space-y-2 text-sm text-white/80">
+                <p>+7 (495) 123-45-67</p>
+                <p>info@autoprofi.ru</p>
+                <p>Москва, ул. Примерная, 123</p>
+              </div>
+            </div>
+            
+            <div className="text-white">
+              <h4 className="font-bold mb-3">Режим работы</h4>
+              <div className="space-y-2 text-sm text-white/80">
+                <p>Пн-Пт: 9:00 - 21:00</p>
+                <p>Сб-Вс: 10:00 - 18:00</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="border-t border-white/20 pt-6 text-center">
+            <p className="text-white/60 text-sm">© 2024 АвтоПрофи. Все права защищены.</p>
+          </div>
         </div>
       </footer>
 
