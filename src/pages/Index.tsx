@@ -221,24 +221,22 @@ const Index = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col justify-center items-center bg-white rounded-lg p-6 border-2 border-primary shadow-lg">
-                  <Button 
-                    size="lg" 
-                    className="w-full text-lg py-6"
-                    onClick={() => {
-                      setSelectedCourse({
-                        id: 0,
-                        title: 'Пробное занятие',
-                        category: 'Пробный урок',
-                        description: 'Бесплатное пробное занятие',
-                        duration: '45 минут',
-                        price: 0,
-                        features: []
-                      });
-                      setIsEnrollDialogOpen(true);
-                    }}
-                  >Записаться на занятие</Button>
-                </div>
+                <Button 
+                  size="lg" 
+                  className="text-lg py-6"
+                  onClick={() => {
+                    setSelectedCourse({
+                      id: 0,
+                      title: 'Пробное занятие',
+                      category: 'Пробный урок',
+                      description: 'Бесплатное пробное занятие',
+                      duration: '45 минут',
+                      price: 0,
+                      features: []
+                    });
+                    setIsEnrollDialogOpen(true);
+                  }}
+                >Записаться на занятие</Button>
               </div>
             </CardContent>
           </Card>
