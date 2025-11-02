@@ -104,24 +104,59 @@ const Admin = () => {
 
   const fetchData = async (table: string) => {
     setLoading(true);
-    setTimeout(() => setLoading(false), 300);
+    try {
+      const response = await fetch(`https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db?table=${table}`);
+      const data = await response.json();
+      
+      if (table === 'courses') {
+        setCourses(data);
+      } else if (table === 'instructors') {
+        setInstructors(data);
+      } else if (table === 'enrollments') {
+        setEnrollments(data);
+      }
+    } catch (error) {
+      toast({
+        title: "Ошибка",
+        description: "Не удалось загрузить данные",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const deleteRecord = async (table: string, id: number) => {
     if (!confirm('Вы уверены, что хотите удалить эту запись?')) return;
     
-    if (table === 'courses') {
-      setCourses(courses.filter(c => c.id !== id));
-    } else if (table === 'instructors') {
-      setInstructors(instructors.filter(i => i.id !== id));
-    } else if (table === 'enrollments') {
-      setEnrollments(enrollments.filter(e => e.id !== id));
+    try {
+      const response = await fetch(`https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db?table=${table}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      
+      if (response.ok) {
+        if (table === 'courses') {
+          setCourses(courses.filter(c => c.id !== id));
+        } else if (table === 'instructors') {
+          setInstructors(instructors.filter(i => i.id !== id));
+        } else if (table === 'enrollments') {
+          setEnrollments(enrollments.filter(e => e.id !== id));
+        }
+        
+        toast({
+          title: "Успешно",
+          description: "Запись удалена"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Ошибка",
+        description: "Не удалось удалить запись",
+        variant: "destructive"
+      });
     }
-    
-    toast({
-      title: "Успешно",
-      description: "Запись удалена"
-    });
   };
 
   const openEditDialog = (table: string, item: any) => {
@@ -143,49 +178,63 @@ const Admin = () => {
   };
 
   const saveRecord = async () => {
-    if (editingItem.id) {
-      if (editingTable === 'courses') {
-        setCourses(courses.map(c => c.id === editingItem.id ? editingItem : c));
-      } else if (editingTable === 'instructors') {
-        setInstructors(instructors.map(i => i.id === editingItem.id ? editingItem : i));
-      } else if (editingTable === 'enrollments') {
-        setEnrollments(enrollments.map(e => e.id === editingItem.id ? editingItem : e));
-      }
-      toast({
-        title: "Успешно",
-        description: "Запись обновлена"
+    try {
+      const method = editingItem.id ? 'PUT' : 'POST';
+      const response = await fetch(`https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db?table=${editingTable}`, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editingItem)
       });
-    } else {
-      const newId = Math.max(
-        ...(editingTable === 'courses' ? courses.map(c => c.id || 0) :
-           editingTable === 'instructors' ? instructors.map(i => i.id || 0) :
-           enrollments.map(e => e.id || 0)),
-        0
-      ) + 1;
       
-      const newItem = { ...editingItem, id: newId };
-      
-      if (editingTable === 'courses') {
-        setCourses([...courses, newItem]);
-      } else if (editingTable === 'instructors') {
-        setInstructors([...instructors, newItem]);
-      } else if (editingTable === 'enrollments') {
-        setEnrollments([...enrollments, newItem]);
+      if (response.ok) {
+        if (editingItem.id) {
+          if (editingTable === 'courses') {
+            setCourses(courses.map(c => c.id === editingItem.id ? editingItem : c));
+          } else if (editingTable === 'instructors') {
+            setInstructors(instructors.map(i => i.id === editingItem.id ? editingItem : i));
+          } else if (editingTable === 'enrollments') {
+            setEnrollments(enrollments.map(e => e.id === editingItem.id ? editingItem : e));
+          }
+          toast({
+            title: "Успешно",
+            description: "Запись обновлена"
+          });
+        } else {
+          const data = await response.json();
+          const newItem = { ...editingItem, id: data.id };
+          
+          if (editingTable === 'courses') {
+            setCourses([...courses, newItem]);
+          } else if (editingTable === 'instructors') {
+            setInstructors([...instructors, newItem]);
+          } else if (editingTable === 'enrollments') {
+            setEnrollments([...enrollments, newItem]);
+          }
+          
+          toast({
+            title: "Успешно",
+            description: "Запись создана"
+          });
+        }
+        
+        setEditDialogOpen(false);
+        setEditingItem(null);
       }
-      
+    } catch (error) {
       toast({
-        title: "Успешно",
-        description: "Запись создана"
+        title: "Ошибка",
+        description: "Не удалось сохранить запись",
+        variant: "destructive"
       });
     }
-    
-    setEditDialogOpen(false);
-    setEditingItem(null);
   };
 
   useEffect(() => {
     if (isAuthenticated) {
       sessionStorage.setItem('adminAuth', 'true');
+      fetchData('enrollments');
+      fetchData('courses');
+      fetchData('instructors');
     }
   }, [isAuthenticated]);
 
