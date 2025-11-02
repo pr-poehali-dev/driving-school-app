@@ -191,7 +191,7 @@ const Index = () => {
             </div>
             <CardContent className="p-8">
               <div className="grid md:grid-cols-3 gap-6 mb-8">
-                <div className="text-center p-6 bg-muted/30 rounded-lg">
+                <div className="text-center p-6 bg-muted/30 rounded-lg border-2 border-muted">
                   <Icon name="Clock" className="text-primary mx-auto mb-3" size={40} />
                   <p className="font-bold text-lg mb-1">45 минут</p>
                   <p className="text-sm text-muted-foreground">За рулем с инструктором</p>
