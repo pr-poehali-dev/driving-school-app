@@ -1,0 +1,25 @@
+{
+  "tests": [
+    {
+      "name": "OPTIONS - CORS preflight",
+      "method": "OPTIONS",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedHeaders": {
+        "Access-Control-Allow-Origin": "*"
+      }
+    },
+    {
+      "name": "GET - общая статистика",
+      "method": "GET",
+      "path": "/?type=overview",
+      "expectedStatus": 200
+    },
+    {
+      "name": "GET - статистика по курсам",
+      "method": "GET",
+      "path": "/?type=courses",
+      "expectedStatus": 200
+    }
+  ]
+}
