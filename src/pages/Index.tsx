@@ -371,44 +371,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="contact" className="py-12 px-4 bg-muted/20">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-4xl font-bold mb-4">Свяжитесь с нами</h2>
-          <p className="text-lg text-muted-foreground mb-12">Выберите удобный способ связи</p>
-          
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <a href="tel:+74951234567" className="block">
-              <Card className="hover-scale cursor-pointer border-2 hover:border-primary transition-all h-full">
-                <CardContent className="pt-8 pb-6">
-                  <Icon name="Phone" className="text-primary mx-auto mb-4" size={48} />
-                  <h3 className="font-bold text-xl mb-2">+7 (495) 123-45-67</h3>
-                  <p className="text-sm text-muted-foreground">Ежедневно 9:00-21:00</p>
-                </CardContent>
-              </Card>
-            </a>
-            
-            <a href="mailto:info@autoprofi.ru" className="block">
-              <Card className="hover-scale cursor-pointer border-2 hover:border-primary transition-all h-full">
-                <CardContent className="pt-8 pb-6">
-                  <Icon name="Mail" className="text-primary mx-auto mb-4" size={48} />
-                  <h3 className="font-bold text-xl mb-2">info@autoprofi.ru</h3>
-                  <p className="text-sm text-muted-foreground">Ответим в течение 2 часов</p>
-                </CardContent>
-              </Card>
-            </a>
-            
-            <Card className="hover-scale border-2 hover:border-primary transition-all h-full">
-              <CardContent className="pt-8 pb-6">
-                <Icon name="MapPin" className="text-primary mx-auto mb-4" size={48} />
-                <h3 className="font-bold text-xl mb-2">Москва</h3>
-                <p className="text-sm text-muted-foreground">ул. Примерная, 123</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      <footer className="bg-gradient-to-r from-secondary to-secondary/90 py-12 px-4">
+      <footer id="contact" className="bg-gradient-to-r from-secondary to-secondary/90 py-12 px-4">
         <div className="container mx-auto max-w-6xl">
           <div className="grid md:grid-cols-3 gap-8 mb-8">
             <div className="text-white">
