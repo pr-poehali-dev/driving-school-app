@@ -32,7 +32,32 @@ const API_URL = 'https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec778
 
 const Index = () => {
   const [courses, setCourses] = useState<Course[]>([]);
-  const [instructors, setInstructors] = useState<Instructor[]>([]);
+  const [instructors, setInstructors] = useState<Instructor[]>([
+    {
+      id: 1,
+      name: "Иванов Сергей Петрович",
+      specialization: "Категории B, C",
+      experience: 15,
+      rating: 4.9,
+      bio: "Мастер производственного обучения высшей категории. Более 1000 выпускников."
+    },
+    {
+      id: 2,
+      name: "Петрова Анна Викторовна",
+      specialization: "Категория B",
+      experience: 8,
+      rating: 4.8,
+      bio: "Терпеливый инструктор с индивидуальным подходом к каждому ученику."
+    },
+    {
+      id: 3,
+      name: "Смирнов Дмитрий Александрович",
+      specialization: "Категории A, B",
+      experience: 12,
+      rating: 4.95,
+      bio: "Специалист по обучению вождению мотоциклов и автомобилей."
+    }
+  ]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isEnrollDialogOpen, setIsEnrollDialogOpen] = useState(false);
   const { toast } = useToast();
