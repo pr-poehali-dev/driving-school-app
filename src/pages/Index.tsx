@@ -31,7 +31,50 @@ interface Instructor {
 const API_URL = 'https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db';
 
 const Index = () => {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<Course[]>([
+    {
+      id: 1,
+      title: "Категория B (легковой автомобиль)",
+      category: "B",
+      description: "Полный курс обучения вождению легкового автомобиля с нуля до получения прав",
+      duration: "3 месяца",
+      price: 35000,
+      features: [
+        "130 часов теории",
+        "56 часов практики",
+        "Современные автомобили",
+        "Помощь в ГИБДД"
+      ]
+    },
+    {
+      id: 2,
+      title: "Категория A (мотоцикл)",
+      category: "A",
+      description: "Обучение вождению мотоцикла для начинающих и опытных водителей",
+      duration: "2 месяца",
+      price: 28000,
+      features: [
+        "Теория ПДД",
+        "18 часов практики",
+        "Современные мотоциклы",
+        "Экипировка включена"
+      ]
+    },
+    {
+      id: 3,
+      title: "Категория C (грузовой автомобиль)",
+      category: "C",
+      description: "Профессиональная подготовка водителей грузовых автомобилей",
+      duration: "4 месяца",
+      price: 45000,
+      features: [
+        "Расширенная теория",
+        "72 часа практики",
+        "Грузовики разных типов",
+        "Допуск к экзамену"
+      ]
+    }
+  ]);
   const [instructors, setInstructors] = useState<Instructor[]>([
     {
       id: 1,
@@ -268,45 +311,68 @@ const Index = () => {
           </Card>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {courses.map((course) => (
-              <Card key={course.id} className="hover-scale flex flex-col">
-                <CardHeader>
-                  <div className="flex items-center justify-between mb-4">
-                    <Badge className="text-lg px-4 py-1 bg-primary">
-                      Категория {course.category}
-                    </Badge>
-                    <Icon name="Car" className="text-primary" size={32} />
-                  </div>
-                  <CardTitle className="text-xl">{course.title}</CardTitle>
-                  <CardDescription>{course.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-1">
-                  <div className="space-y-3 mb-4">
-                    {course.features.map((feature, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <Icon name="CheckCircle2" className="text-primary mt-1 flex-shrink-0" size={18} />
-                        <span className="text-sm">{feature}</span>
+            {courses.map((course) => {
+              const getCategoryIcon = (category: string) => {
+                if (category === 'B') return 'Car';
+                if (category === 'A') return 'Bike';
+                if (category === 'C') return 'Truck';
+                return 'Car';
+              };
+              
+              const getFeatureIcon = (feature: string) => {
+                if (feature.includes('теори')) return 'BookOpen';
+                if (feature.includes('практик')) return 'Clock';
+                if (feature.includes('автомобил') || feature.includes('мотоцикл') || feature.includes('Грузовик')) return 'Settings';
+                if (feature.includes('ГИБДД') || feature.includes('экзамен') || feature.includes('Экипировка')) return 'CheckCircle2';
+                return 'CircleDot';
+              };
+
+              return (
+                <Card key={course.id} className="hover-scale flex flex-col border-2 hover:border-primary/50 transition-all">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center justify-between mb-3">
+                      <Badge className="text-base px-4 py-1.5 bg-primary text-white rounded-full">
+                        Категория {course.category}
+                      </Badge>
+                      <div className="bg-primary/10 p-2 rounded-full">
+                        <Icon name={getCategoryIcon(course.category)} className="text-primary" size={28} />
                       </div>
-                    ))}
-                  </div>
-                  <div className="flex items-baseline gap-2 mb-2">
-                    <span className="text-3xl font-bold gradient-text">{course.price.toLocaleString()} ₽</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Icon name="Clock" size={16} />
-                    <span>{course.duration}</span>
-                  </div>
-                </CardContent>
-                <CardFooter>
-                  <Button 
-                    onClick={() => handleEnroll(course)} 
-                    className="w-full bg-primary hover:bg-primary/90"
-                  >
-                    Записаться
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
+                    </div>
+                    <CardTitle className="text-xl font-bold mb-2">{course.title}</CardTitle>
+                    <CardDescription className="text-sm">{course.description}</CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex-1 pt-0">
+                    <div className="space-y-3 mb-6">
+                      {course.features.map((feature, idx) => (
+                        <div key={idx} className="flex items-start gap-3">
+                          <div className="bg-primary/10 p-1.5 rounded-full flex-shrink-0 mt-0.5">
+                            <Icon name={getFeatureIcon(feature)} className="text-primary" size={14} />
+                          </div>
+                          <span className="text-sm text-muted-foreground">{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-4xl font-bold text-primary">{course.price.toLocaleString()} ₽</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <Icon name="Clock" size={16} className="text-primary" />
+                        <span>{course.duration}</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                  <CardFooter className="pt-0">
+                    <Button 
+                      onClick={() => handleEnroll(course)} 
+                      className="w-full bg-primary hover:bg-primary/90 text-white py-6 text-base font-semibold"
+                    >
+                      Записаться
+                    </Button>
+                  </CardFooter>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </section>
