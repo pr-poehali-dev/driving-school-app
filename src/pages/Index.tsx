@@ -342,14 +342,13 @@ const Index = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-2">
+            <Card className="border-2 border-primary">
               <CardContent className="p-8 flex flex-col items-center justify-center text-center h-full">
                 <Icon name="MessageCircle" className="text-primary mb-4" size={48} />
                 <h3 className="text-xl font-bold mb-3">Консультация по выбору курса</h3>
                 <p className="text-muted-foreground mb-5">Поможем подобрать программу обучения под ваши цели</p>
                 <Button 
                   size="lg"
-                  variant="outline"
                   className="w-full"
                   onClick={() => {
                     setSelectedCourse({
