@@ -162,28 +162,12 @@ const Index = () => {
               </Button>
             </div>
 
-            <div className="relative flex items-center justify-center">
-              <svg viewBox="0 0 600 400" className="w-full h-auto drop-shadow-2xl" xmlns="http://www.w3.org/2000/svg">
-                <rect x="120" y="140" width="360" height="140" rx="15" fill="#fff" opacity="0.95"/>
-                <rect x="120" y="140" width="360" height="60" rx="15" fill="#f3f4f6"/>
-                <rect x="160" y="160" width="100" height="25" rx="5" fill="#e5e7eb"/>
-                <rect x="280" y="160" width="100" height="25" rx="5" fill="#e5e7eb"/>
-                <circle cx="180" cy="280" r="35" fill="#1f2937"/>
-                <circle cx="180" cy="280" r="20" fill="#6b7280"/>
-                <circle cx="420" cy="280" r="35" fill="#1f2937"/>
-                <circle cx="420" cy="280" r="20" fill="#6b7280"/>
-                <path d="M 120 200 L 140 160 L 240 160 L 260 200 Z" fill="#dbeafe" opacity="0.8"/>
-                <path d="M 340 200 L 360 160 L 460 160 L 480 200 Z" fill="#dbeafe" opacity="0.8"/>
-                <rect x="145" y="170" width="35" height="20" rx="3" fill="#93c5fd" opacity="0.6"/>
-                <rect x="190" y="170" width="35" height="20" rx="3" fill="#93c5fd" opacity="0.6"/>
-                <rect x="365" y="170" width="35" height="20" rx="3" fill="#93c5fd" opacity="0.6"/>
-                <rect x="410" y="170" width="35" height="20" rx="3" fill="#93c5fd" opacity="0.6"/>
-                <rect x="480" y="240" width="15" height="8" rx="2" fill="#ef4444"/>
-                <rect x="485" y="250" width="10" height="8" rx="2" fill="#ef4444"/>
-                <rect x="460" y="210" width="8" height="5" rx="1" fill="#fbbf24"/>
-                <ellipse cx="300" cy="320" rx="250" ry="15" fill="#000" opacity="0.1"/>
-                <path d="M 140 230 Q 145 225 150 230 L 150 260 Q 145 265 140 260 Z" fill="#f97316" opacity="0.8"/>
-              </svg>
+            <div className="relative">
+              <img 
+                src="https://cdn.poehali.dev/projects/075299df-7d74-4170-ac20-fbae5ea2763c/files/747fc6c5-955d-4a53-b2d4-91ecd0d1ca67.jpg" 
+                alt="Обучение вождению" 
+                className="w-full h-auto rounded-2xl shadow-2xl"
+              />
             </div>
           </div>
         </div>
