@@ -384,36 +384,51 @@ const Index = () => {
             <p className="text-xl text-muted-foreground">Профессионалы своего дела</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="space-y-6 mb-12">
             {instructors.map((instructor) => (
-              <Card key={instructor.id} className="text-center hover-scale border-2 hover:shadow-2xl transition-all">
-                <CardContent className="pt-10 pb-8">
-                  <div className="relative w-28 h-28 mx-auto mb-6">
-                    <div className="absolute inset-0 bg-primary/20 rounded-full"></div>
-                    <div className="absolute inset-2 bg-white rounded-full flex items-center justify-center">
-                      <Icon name="User" className="text-primary" size={56} />
-                    </div>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold mb-1">{instructor.name}</h3>
-                  <p className="text-sm text-primary font-semibold mb-6">{instructor.specialization}</p>
-                  
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="bg-muted/50 rounded-lg p-3">
-                      <div className="flex items-center justify-center gap-1 mb-1">
-                        <Icon name="Star" className="text-yellow-500 fill-yellow-500" size={16} />
-                        <span className="text-xl font-bold">{instructor.rating}</span>
+              <Card key={instructor.id} className="hover-scale border-2 hover:border-primary/50 transition-all overflow-hidden">
+                <div className="flex flex-col md:flex-row">
+                  <div className="bg-gradient-to-br from-primary/10 to-primary/5 p-8 md:p-12 flex items-center justify-center md:w-64 flex-shrink-0">
+                    <div className="relative">
+                      <div className="w-32 h-32 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center shadow-2xl">
+                        <Icon name="User" className="text-white" size={64} />
                       </div>
-                      <p className="text-xs text-muted-foreground">Рейтинг</p>
-                    </div>
-                    <div className="bg-muted/50 rounded-lg p-3">
-                      <p className="text-xl font-bold mb-1">{instructor.experience}</p>
-                      <p className="text-xs text-muted-foreground">Лет опыта</p>
+                      <div className="absolute -bottom-2 -right-2 bg-white rounded-full p-2 shadow-lg border-2 border-primary">
+                        <div className="flex items-center gap-1">
+                          <Icon name="Star" className="text-yellow-500 fill-yellow-500" size={16} />
+                          <span className="text-sm font-bold text-foreground">{instructor.rating}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   
-                  <p className="text-sm text-muted-foreground">{instructor.bio}</p>
-                </CardContent>
+                  <CardContent className="flex-1 p-8 md:p-10">
+                    <div className="flex flex-col h-full justify-between">
+                      <div>
+                        <h3 className="text-2xl font-bold mb-2">{instructor.name}</h3>
+                        <p className="text-lg text-primary font-semibold mb-4">{instructor.specialization}</p>
+                        <p className="text-muted-foreground mb-6 leading-relaxed">{instructor.bio}</p>
+                      </div>
+                      
+                      <div className="flex gap-4 flex-wrap">
+                        <div className="flex items-center gap-2 bg-muted/50 rounded-lg px-4 py-2">
+                          <Icon name="Award" className="text-primary" size={20} />
+                          <div>
+                            <p className="text-xs text-muted-foreground">Рейтинг</p>
+                            <p className="text-lg font-bold">{instructor.rating}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 bg-muted/50 rounded-lg px-4 py-2">
+                          <Icon name="Calendar" className="text-primary" size={20} />
+                          <div>
+                            <p className="text-xs text-muted-foreground">Лет опыта</p>
+                            <p className="text-lg font-bold">{instructor.experience}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </div>
               </Card>
             ))}
           </div>
