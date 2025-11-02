@@ -138,36 +138,68 @@ const Index = () => {
         </div>
       </header>
 
-      <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-br from-primary via-orange-500 to-primary">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-32 -right-32 w-96 h-96 bg-orange-400/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-primary/30 rounded-full blur-3xl" />
-        </div>
-        
-        <div className="container mx-auto max-w-7xl relative z-10">
-          <div className="grid md:grid-cols-2 gap-12 items-center animate-fade-in">
-            <div className="text-white">
-              <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-                Научитесь водить с нуля
+      <section className="py-20 px-4 bg-muted/30">
+        <div className="container mx-auto animate-fade-in">
+          <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+            <div className="text-left">
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
+                Научим водить с нуля
               </h2>
-              <p className="text-xl mb-8 opacity-90 leading-relaxed">
-                Выберите курс обучения от 15 000₽ до 45 000₽, оплатите онлайн и начните обучение с опытными инструкторами
+              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику. 
+                Получите права быстро и уверенно!
               </p>
-              <Button 
-                size="lg"
-                className="bg-white hover:bg-gray-100 text-primary text-lg px-10 py-7 h-auto rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all"
-                onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                Выбрать курс
-              </Button>
+              <div className="flex flex-wrap gap-4">
+                <Button 
+                  size="lg" 
+                  className="text-lg px-8 py-6 h-auto"
+                  onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
+                >
+                  Выбрать курс
+                </Button>
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="text-lg px-8 py-6 h-auto"
+                  onClick={() => {
+                    setSelectedCourse({
+                      id: 0,
+                      title: 'Пробное занятие',
+                      category: 'Пробный урок',
+                      description: 'Бесплатное пробное занятие',
+                      duration: '45 минут',
+                      price: 0,
+                      features: []
+                    });
+                    setIsEnrollDialogOpen(true);
+                  }}
+                >
+                  Пробный урок
+                </Button>
+              </div>
             </div>
 
-            <div className="relative">
-              <img 
-                src="https://cdn.poehali.dev/projects/075299df-7d74-4170-ac20-fbae5ea2763c/files/747fc6c5-955d-4a53-b2d4-91ecd0d1ca67.jpg" 
-                alt="Обучение вождению" 
-                className="w-full h-auto rounded-2xl shadow-2xl"
-              />
+            <div className="grid grid-cols-2 gap-4">
+              <Card className="text-center p-6 border-2">
+                <Icon name="Award" className="text-primary mx-auto mb-3" size={40} />
+                <p className="text-4xl font-bold mb-2">15</p>
+                <p className="text-sm text-muted-foreground">лет опыта</p>
+              </Card>
+              <Card className="text-center p-6 border-2">
+                <Icon name="Users" className="text-primary mx-auto mb-3" size={40} />
+                <p className="text-4xl font-bold mb-2">5000+</p>
+                <p className="text-sm text-muted-foreground">выпускников</p>
+              </Card>
+              <Card className="text-center p-6 border-2">
+                <Icon name="TrendingUp" className="text-primary mx-auto mb-3" size={40} />
+                <p className="text-4xl font-bold mb-2">96%</p>
+                <p className="text-sm text-muted-foreground">сдают с 1 раза</p>
+              </Card>
+              <Card className="text-center p-6 border-2">
+                <Icon name="Car" className="text-primary mx-auto mb-3" size={40} />
+                <p className="text-4xl font-bold mb-2">20+</p>
+                <p className="text-sm text-muted-foreground">автомобилей</p>
+              </Card>
             </div>
           </div>
         </div>
