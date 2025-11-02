@@ -48,40 +48,48 @@ const EnrollmentsTab = ({ enrollments, loading, onEdit, onDelete, onCreate }: En
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {enrollments.map((enrollment) => (
-                  <TableRow key={enrollment.id}>
-                    <TableCell className="font-medium">{enrollment.id}</TableCell>
-                    <TableCell>{enrollment.full_name}</TableCell>
-                    <TableCell>{enrollment.phone}</TableCell>
-                    <TableCell>{enrollment.email || '—'}</TableCell>
-                    <TableCell>{enrollment.course_id}</TableCell>
-                    <TableCell className="max-w-xs truncate">{enrollment.message || '—'}</TableCell>
-                    <TableCell>
-                      <Badge variant={enrollment.status === 'new' ? 'default' : 'secondary'}>
-                        {enrollment.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{new Date(enrollment.created_at).toLocaleDateString('ru-RU')}</TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => onEdit(enrollment)}
-                        >
-                          <Icon name="Pencil" size={14} />
-                        </Button>
-                        <Button
-                          variant="destructive"
-                          size="sm"
-                          onClick={() => onDelete(enrollment.id)}
-                        >
-                          <Icon name="Trash2" size={14} />
-                        </Button>
-                      </div>
+                {enrollments.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={9} className="text-center py-8 text-muted-foreground">
+                      Заявок пока нет
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  enrollments.map((enrollment) => (
+                    <TableRow key={enrollment.id}>
+                      <TableCell className="font-medium">{enrollment.id}</TableCell>
+                      <TableCell>{enrollment.full_name}</TableCell>
+                      <TableCell>{enrollment.phone}</TableCell>
+                      <TableCell>{enrollment.email || '—'}</TableCell>
+                      <TableCell>{enrollment.course_id || '—'}</TableCell>
+                      <TableCell className="max-w-xs truncate">{enrollment.message || '—'}</TableCell>
+                      <TableCell>
+                        <Badge variant={enrollment.status === 'new' ? 'default' : 'secondary'}>
+                          {enrollment.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{enrollment.created_at ? new Date(enrollment.created_at).toLocaleDateString('ru-RU') : '—'}</TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => onEdit(enrollment)}
+                          >
+                            <Icon name="Pencil" size={14} />
+                          </Button>
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            onClick={() => onDelete(enrollment.id!)}
+                          >
+                            <Icon name="Trash2" size={14} />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
           </div>

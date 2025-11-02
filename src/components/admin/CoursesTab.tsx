@@ -78,7 +78,7 @@ const CoursesTab = ({ courses, loading, onEdit, onDelete, onCreate }: CoursesTab
                         <Button
                           variant="destructive"
                           size="sm"
-                          onClick={() => onDelete(course.id)}
+                          onClick={() => onDelete(course.id!)}
                         >
                           <Icon name="Trash2" size={14} />
                         </Button>

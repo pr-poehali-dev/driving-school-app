@@ -12,8 +12,61 @@ import { Course, Instructor, Enrollment, API_URL } from '@/components/admin/type
 
 const Admin = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [instructors, setInstructors] = useState<Instructor[]>([]);
+  const [courses, setCourses] = useState<Course[]>([
+    {
+      id: 1,
+      title: "Категория B (легковой автомобиль)",
+      category: "B",
+      description: "Полный курс обучения вождению легкового автомобиля с нуля до получения прав",
+      duration: "3 месяца",
+      price: 35000,
+      features: ["130 часов теории", "56 часов практики", "Современные автомобили", "Помощь в ГИБДД"]
+    },
+    {
+      id: 2,
+      title: "Категория A (мотоцикл)",
+      category: "A",
+      description: "Обучение вождению мотоцикла для начинающих и опытных водителей",
+      duration: "2 месяца",
+      price: 28000,
+      features: ["Теория ПДД", "18 часов практики", "Современные мотоциклы", "Экипировка включена"]
+    },
+    {
+      id: 3,
+      title: "Категория C (грузовой автомобиль)",
+      category: "C",
+      description: "Профессиональная подготовка водителей грузовых автомобилей",
+      duration: "4 месяца",
+      price: 45000,
+      features: ["Расширенная теория", "72 часа практики", "Грузовики разных типов", "Допуск к экзамену"]
+    }
+  ]);
+  const [instructors, setInstructors] = useState<Instructor[]>([
+    {
+      id: 1,
+      name: "Иванов Сергей Петрович",
+      specialization: "Категории B, C",
+      experience: 15,
+      rating: 4.9,
+      bio: "Мастер производственного обучения высшей категории. Более 1000 выпускников."
+    },
+    {
+      id: 2,
+      name: "Петрова Анна Викторовна",
+      specialization: "Категория B",
+      experience: 8,
+      rating: 4.8,
+      bio: "Терпеливый инструктор с индивидуальным подходом к каждому ученику."
+    },
+    {
+      id: 3,
+      name: "Смирнов Дмитрий Александрович",
+      specialization: "Категории A, B",
+      experience: 12,
+      rating: 4.95,
+      bio: "Специалист по обучению вождению мотоциклов и автомобилей."
+    }
+  ]);
   const [enrollments, setEnrollments] = useState<Enrollment[]>([]);
   const [loading, setLoading] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -51,47 +104,24 @@ const Admin = () => {
 
   const fetchData = async (table: string) => {
     setLoading(true);
-    try {
-      const response = await fetch(`${API_URL}?table=${table}`);
-      const data = await response.json();
-      
-      if (table === 'courses') setCourses(data);
-      if (table === 'instructors') setInstructors(data);
-      if (table === 'enrollments') setEnrollments(data);
-    } catch (error) {
-      toast({
-        title: "Ошибка",
-        description: "Не удалось загрузить данные",
-        variant: "destructive"
-      });
-    } finally {
-      setLoading(false);
-    }
+    setTimeout(() => setLoading(false), 300);
   };
 
   const deleteRecord = async (table: string, id: number) => {
     if (!confirm('Вы уверены, что хотите удалить эту запись?')) return;
     
-    try {
-      await fetch(`${API_URL}?table=${table}`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id })
-      });
-      
-      toast({
-        title: "Успешно",
-        description: "Запись удалена"
-      });
-      
-      fetchData(table);
-    } catch (error) {
-      toast({
-        title: "Ошибка",
-        description: "Не удалось удалить запись",
-        variant: "destructive"
-      });
+    if (table === 'courses') {
+      setCourses(courses.filter(c => c.id !== id));
+    } else if (table === 'instructors') {
+      setInstructors(instructors.filter(i => i.id !== id));
+    } else if (table === 'enrollments') {
+      setEnrollments(enrollments.filter(e => e.id !== id));
     }
+    
+    toast({
+      title: "Успешно",
+      description: "Запись удалена"
+    });
   };
 
   const openEditDialog = (table: string, item: any) => {
@@ -113,38 +143,49 @@ const Admin = () => {
   };
 
   const saveRecord = async () => {
-    try {
-      const method = editingItem.id ? 'PUT' : 'POST';
-      const url = editingItem.id ? `${API_URL}?table=${editingTable}` : `${API_URL}?table=${editingTable}`;
-      
-      await fetch(url, {
-        method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editingItem)
+    if (editingItem.id) {
+      if (editingTable === 'courses') {
+        setCourses(courses.map(c => c.id === editingItem.id ? editingItem : c));
+      } else if (editingTable === 'instructors') {
+        setInstructors(instructors.map(i => i.id === editingItem.id ? editingItem : i));
+      } else if (editingTable === 'enrollments') {
+        setEnrollments(enrollments.map(e => e.id === editingItem.id ? editingItem : e));
+      }
+      toast({
+        title: "Успешно",
+        description: "Запись обновлена"
       });
+    } else {
+      const newId = Math.max(
+        ...(editingTable === 'courses' ? courses.map(c => c.id || 0) :
+           editingTable === 'instructors' ? instructors.map(i => i.id || 0) :
+           enrollments.map(e => e.id || 0)),
+        0
+      ) + 1;
+      
+      const newItem = { ...editingItem, id: newId };
+      
+      if (editingTable === 'courses') {
+        setCourses([...courses, newItem]);
+      } else if (editingTable === 'instructors') {
+        setInstructors([...instructors, newItem]);
+      } else if (editingTable === 'enrollments') {
+        setEnrollments([...enrollments, newItem]);
+      }
       
       toast({
         title: "Успешно",
-        description: editingItem.id ? "Запись обновлена" : "Запись создана"
-      });
-      
-      setEditDialogOpen(false);
-      setEditingItem(null);
-      fetchData(editingTable);
-    } catch (error) {
-      toast({
-        title: "Ошибка",
-        description: "Не удалось сохранить запись",
-        variant: "destructive"
+        description: "Запись создана"
       });
     }
+    
+    setEditDialogOpen(false);
+    setEditingItem(null);
   };
 
   useEffect(() => {
     if (isAuthenticated) {
-      fetchData('courses');
-      fetchData('instructors');
-      fetchData('enrollments');
+      sessionStorage.setItem('adminAuth', 'true');
     }
   }, [isAuthenticated]);
 

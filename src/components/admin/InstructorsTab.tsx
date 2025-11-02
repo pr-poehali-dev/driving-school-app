@@ -70,7 +70,7 @@ const InstructorsTab = ({ instructors, loading, onEdit, onDelete, onCreate }: In
                         <Button
                           variant="destructive"
                           size="sm"
-                          onClick={() => onDelete(instructor.id)}
+                          onClick={() => onDelete(instructor.id!)}
                         >
                           <Icon name="Trash2" size={14} />
                         </Button>

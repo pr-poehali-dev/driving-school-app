@@ -1,5 +1,5 @@
 export interface Course {
-  id: number;
+  id?: number;
   title: string;
   category: string;
   description: string;
@@ -9,7 +9,7 @@ export interface Course {
 }
 
 export interface Instructor {
-  id: number;
+  id?: number;
   name: string;
   specialization: string;
   experience: number;
@@ -18,14 +18,14 @@ export interface Instructor {
 }
 
 export interface Enrollment {
-  id: number;
+  id?: number;
   full_name: string;
   phone: string;
   email: string;
-  course_id: number;
+  course_id: number | null;
   message: string;
   status: string;
-  created_at: string;
+  created_at?: string;
 }
 
 export const API_URL = 'https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db';
