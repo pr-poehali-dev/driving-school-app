@@ -196,7 +196,7 @@ const Index = () => {
                   <p className="font-bold text-lg mb-1">45 минут</p>
                   <p className="text-sm text-muted-foreground">За рулем с инструктором</p>
                 </div>
-                <div className="text-center p-6 bg-muted/30 rounded-lg">
+                <div className="text-center p-6 bg-muted/30 rounded-lg border-2 border-muted">
                   <Icon name="MapPin" className="text-primary mx-auto mb-3" size={40} />
                   <p className="font-bold text-lg mb-1">Удобное место</p>
                   <p className="text-sm text-muted-foreground">Встреча в вашем районе</p>
