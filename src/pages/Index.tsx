@@ -138,10 +138,10 @@ const Index = () => {
         </div>
       </header>
 
-      <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-br from-purple-700 via-purple-600 to-purple-800">
+      <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-br from-primary via-orange-500 to-primary">
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
-          <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-purple-900/20 rounded-full blur-3xl" />
+          <div className="absolute -top-32 -right-32 w-96 h-96 bg-orange-400/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-primary/30 rounded-full blur-3xl" />
         </div>
         
         <div className="container mx-auto max-w-7xl relative z-10">
@@ -155,7 +155,7 @@ const Index = () => {
               </p>
               <Button 
                 size="lg"
-                className="bg-green-500 hover:bg-green-600 text-white text-lg px-10 py-7 h-auto rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all"
+                className="bg-white hover:bg-gray-100 text-primary text-lg px-10 py-7 h-auto rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all"
                 onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Выбрать курс
@@ -164,9 +164,9 @@ const Index = () => {
 
             <div className="relative">
               <img 
-                src="https://cdn.poehali.dev/files/b483456c-a2b4-422c-b3a5-ac787ee678eb.png" 
-                alt="Подарочный сертификат" 
-                className="w-full h-auto drop-shadow-2xl"
+                src="https://cdn.poehali.dev/projects/075299df-7d74-4170-ac20-fbae5ea2763c/files/747fc6c5-955d-4a53-b2d4-91ecd0d1ca67.jpg" 
+                alt="Обучение вождению" 
+                className="w-full h-auto rounded-2xl shadow-2xl"
               />
             </div>
           </div>
