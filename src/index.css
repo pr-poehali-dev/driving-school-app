@@ -129,4 +129,18 @@
   .gradient-text {
     @apply text-primary;
   }
+
+  .animate-pulse-border {
+    animation: pulseBorder 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseBorder {
+    0%,
+    100% {
+      box-shadow: 0 0 30px 5px hsl(25, 95%, 53%, 0.4);
+    }
+    50% {
+      box-shadow: 0 0 40px 8px hsl(25, 95%, 53%, 0.6);
+    }
+  }
 }
