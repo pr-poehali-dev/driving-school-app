@@ -141,7 +141,7 @@ const Index = () => {
       <section className="relative py-20 px-4 overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: 'url(https://cdn.poehali.dev/projects/075299df-7d74-4170-ac20-fbae5ea2763c/files/3f800158-6be5-4a9c-ac43-d695a6a16c9f.jpg)' }}
+          style={{ backgroundImage: 'url(https://cdn.poehali.dev/projects/075299df-7d74-4170-ac20-fbae5ea2763c/files/286ba1cd-2127-4307-a1d1-04f03b03d31b.jpg)' }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/90 to-background/80" />
         
