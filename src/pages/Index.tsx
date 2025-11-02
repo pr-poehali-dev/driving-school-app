@@ -241,10 +241,7 @@ const Index = () => {
                       });
                       setIsEnrollDialogOpen(true);
                     }}
-                  >
-                    <Icon name="Calendar" className="mr-2" size={20} />
-                    Записаться на пробное занятие
-                  </Button>
+                  >Записаться на занятие</Button>
                 </div>
               </div>
             </CardContent>
