@@ -138,68 +138,53 @@ const Index = () => {
         </div>
       </header>
 
-      <section className="py-20 px-4 bg-muted/30">
-        <div className="container mx-auto animate-fade-in">
-          <div className="grid md:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
-            <div className="text-left">
-              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-foreground">
-                Научим водить с нуля
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику. 
-                Получите права быстро и уверенно!
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <Button 
-                  size="lg" 
-                  className="text-lg px-8 py-6 h-auto"
-                  onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
-                >
-                  Выбрать курс
-                </Button>
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  className="text-lg px-8 py-6 h-auto"
-                  onClick={() => {
-                    setSelectedCourse({
-                      id: 0,
-                      title: 'Пробное занятие',
-                      category: 'Пробный урок',
-                      description: 'Бесплатное пробное занятие',
-                      duration: '45 минут',
-                      price: 0,
-                      features: []
-                    });
-                    setIsEnrollDialogOpen(true);
-                  }}
-                >
-                  Пробный урок
-                </Button>
-              </div>
-            </div>
+      <section className="py-24 px-4">
+        <div className="container mx-auto text-center animate-fade-in">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6">
+            Научим водить с нуля
+          </h2>
+          <p className="text-xl text-muted-foreground mb-10 max-w-3xl mx-auto">
+            Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику
+          </p>
+          <Button 
+            size="lg" 
+            className="text-xl px-12 py-8 h-auto mb-16"
+            onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
+          >
+            Выбрать курс обучения
+          </Button>
 
-            <div className="grid grid-cols-2 gap-4">
-              <Card className="text-center p-6 border-2">
-                <Icon name="Award" className="text-primary mx-auto mb-3" size={40} />
-                <p className="text-4xl font-bold mb-2">15</p>
-                <p className="text-sm text-muted-foreground">лет опыта</p>
-              </Card>
-              <Card className="text-center p-6 border-2">
-                <Icon name="Users" className="text-primary mx-auto mb-3" size={40} />
-                <p className="text-4xl font-bold mb-2">5000+</p>
-                <p className="text-sm text-muted-foreground">выпускников</p>
-              </Card>
-              <Card className="text-center p-6 border-2">
-                <Icon name="TrendingUp" className="text-primary mx-auto mb-3" size={40} />
-                <p className="text-4xl font-bold mb-2">96%</p>
-                <p className="text-sm text-muted-foreground">сдают с 1 раза</p>
-              </Card>
-              <Card className="text-center p-6 border-2">
-                <Icon name="Car" className="text-primary mx-auto mb-3" size={40} />
-                <p className="text-4xl font-bold mb-2">20+</p>
-                <p className="text-sm text-muted-foreground">автомобилей</p>
-              </Card>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Icon name="Award" className="text-primary" size={40} />
+              </div>
+              <p className="text-4xl font-bold mb-2">15</p>
+              <p className="text-sm text-muted-foreground">лет на рынке</p>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Icon name="Users" className="text-primary" size={40} />
+              </div>
+              <p className="text-4xl font-bold mb-2">5000+</p>
+              <p className="text-sm text-muted-foreground">выпускников</p>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Icon name="TrendingUp" className="text-primary" size={40} />
+              </div>
+              <p className="text-4xl font-bold mb-2">96%</p>
+              <p className="text-sm text-muted-foreground">сдают с 1 раза</p>
+            </div>
+            
+            <div className="flex flex-col items-center">
+              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+                <Icon name="Car" className="text-primary" size={40} />
+              </div>
+              <p className="text-4xl font-bold mb-2">20+</p>
+              <p className="text-sm text-muted-foreground">автомобилей</p>
             </div>
           </div>
         </div>
