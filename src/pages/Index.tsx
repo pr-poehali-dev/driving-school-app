@@ -309,78 +309,64 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="contact" className="py-20 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <Card className="overflow-hidden border-2 border-primary">
-            <div className="grid md:grid-cols-2">
-              <div className="bg-gradient-to-br from-primary to-primary/80 text-white p-12">
-                <h2 className="text-4xl font-bold mb-4">Остались вопросы?</h2>
-                <p className="text-lg opacity-90 mb-8">Свяжитесь с нами удобным способом</p>
-                <div className="space-y-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <Icon name="Phone" size={24} />
-                    </div>
-                    <div>
-                      <p className="font-semibold mb-1">Телефон</p>
-                      <a href="tel:+74951234567" className="text-lg hover:underline">
-                        +7 (495) 123-45-67
-                      </a>
-                      <p className="text-sm opacity-80 mt-1">Ежедневно с 9:00 до 21:00</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <Icon name="Mail" size={24} />
-                    </div>
-                    <div>
-                      <p className="font-semibold mb-1">Email</p>
-                      <a href="mailto:info@autoprofi.ru" className="text-lg hover:underline">
-                        info@autoprofi.ru
-                      </a>
-                      <p className="text-sm opacity-80 mt-1">Ответим в течение 2 часов</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <Icon name="MapPin" size={24} />
-                    </div>
-                    <div>
-                      <p className="font-semibold mb-1">Адрес</p>
-                      <p className="text-lg">Москва, ул. Примерная, 123</p>
-                      <p className="text-sm opacity-80 mt-1">Пн-Пт: 9:00-21:00, Сб-Вс: 10:00-18:00</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="bg-muted/30 p-12 flex flex-col justify-center">
-                <h3 className="text-2xl font-bold mb-6">Записаться на консультацию</h3>
-                <p className="text-muted-foreground mb-6">
-                  Оставьте заявку, и наш специалист свяжется с вами в ближайшее время
-                </p>
-                <Button 
-                  size="lg"
-                  className="w-full text-lg py-6"
-                  onClick={() => {
-                    setSelectedCourse({
-                      id: 0,
-                      title: 'Консультация',
-                      category: 'Консультация',
-                      description: 'Бесплатная консультация по выбору курса',
-                      duration: '30 минут',
-                      price: 0,
-                      features: []
-                    });
-                    setIsEnrollDialogOpen(true);
-                  }}
-                >
-                  Получить консультацию
-                </Button>
-                <p className="text-sm text-muted-foreground mt-4 text-center">
-                  Или запишитесь на бесплатное пробное занятие
-                </p>
-              </div>
-            </div>
+      <section id="contact" className="py-20 px-4 bg-muted/20">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-4xl font-bold mb-4">Свяжитесь с нами</h2>
+          <p className="text-lg text-muted-foreground mb-12">Выберите удобный способ связи</p>
+          
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <a href="tel:+74951234567" className="block">
+              <Card className="hover-scale cursor-pointer border-2 hover:border-primary transition-all h-full">
+                <CardContent className="pt-8 pb-6">
+                  <Icon name="Phone" className="text-primary mx-auto mb-4" size={48} />
+                  <h3 className="font-bold text-xl mb-2">+7 (495) 123-45-67</h3>
+                  <p className="text-sm text-muted-foreground">Ежедневно 9:00-21:00</p>
+                </CardContent>
+              </Card>
+            </a>
+            
+            <a href="mailto:info@autoprofi.ru" className="block">
+              <Card className="hover-scale cursor-pointer border-2 hover:border-primary transition-all h-full">
+                <CardContent className="pt-8 pb-6">
+                  <Icon name="Mail" className="text-primary mx-auto mb-4" size={48} />
+                  <h3 className="font-bold text-xl mb-2">info@autoprofi.ru</h3>
+                  <p className="text-sm text-muted-foreground">Ответим в течение 2 часов</p>
+                </CardContent>
+              </Card>
+            </a>
+            
+            <Card className="border-2 h-full">
+              <CardContent className="pt-8 pb-6">
+                <Icon name="MapPin" className="text-primary mx-auto mb-4" size={48} />
+                <h3 className="font-bold text-xl mb-2">Москва</h3>
+                <p className="text-sm text-muted-foreground">ул. Примерная, 123</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <Card className="border-2 border-primary bg-gradient-to-br from-primary/5 to-primary/10">
+            <CardContent className="py-10 px-6">
+              <h3 className="text-2xl font-bold mb-3">Не нашли ответ на свой вопрос?</h3>
+              <p className="text-muted-foreground mb-6">Запишитесь на бесплатную консультацию</p>
+              <Button 
+                size="lg"
+                className="text-lg py-6 px-10"
+                onClick={() => {
+                  setSelectedCourse({
+                    id: 0,
+                    title: 'Консультация',
+                    category: 'Консультация',
+                    description: 'Бесплатная консультация по выбору курса',
+                    duration: '30 минут',
+                    price: 0,
+                    features: []
+                  });
+                  setIsEnrollDialogOpen(true);
+                }}
+              >
+                Получить консультацию бесплатно
+              </Button>
+            </CardContent>
           </Card>
         </div>
       </section>
