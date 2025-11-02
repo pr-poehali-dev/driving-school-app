@@ -371,7 +371,7 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="contact" className="py-20 px-4 bg-muted/20">
+      <section id="contact" className="py-12 px-4 bg-muted/20">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-4xl font-bold mb-4">Свяжитесь с нами</h2>
           <p className="text-lg text-muted-foreground mb-12">Выберите удобный способ связи</p>
