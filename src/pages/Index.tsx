@@ -184,7 +184,7 @@ const Index = () => {
             <p className="text-muted-foreground">Выберите подходящую категорию обучения</p>
           </div>
 
-          <Card className="mb-12 border-4 border-primary shadow-[0_0_30px_5px_hsl(25,95%,53%,0.4)] bg-gradient-to-br from-primary/5 to-primary/10 animate-pulse-border">
+          <Card className="mb-12 border-2 border-primary bg-gradient-to-br from-primary/5 to-primary/10">
             <CardHeader>
               <div className="flex items-center gap-4">
                 <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center">
