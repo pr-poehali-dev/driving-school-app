@@ -138,68 +138,37 @@ const Index = () => {
         </div>
       </header>
 
-      <section className="relative py-32 px-4 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-background to-primary/10" />
-        <div className="container mx-auto max-w-4xl relative z-10 animate-fade-in">
-          <div className="text-center mb-16">
-            <div className="inline-block bg-primary/10 text-primary px-6 py-2 rounded-full text-sm font-semibold mb-6">
-              🚗 Автошкола №1 в вашем городе
-            </div>
-            <h2 className="text-6xl md:text-7xl font-bold mb-6 leading-tight">
-              Научим водить<br />с нуля
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
-              Современные автомобили, опытные инструкторы и индивидуальный подход к каждому ученику
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
+      <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-br from-purple-700 via-purple-600 to-purple-800">
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-purple-900/20 rounded-full blur-3xl" />
+        </div>
+        
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="grid md:grid-cols-2 gap-12 items-center animate-fade-in">
+            <div className="text-white">
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                Научитесь водить с нуля
+              </h2>
+              <p className="text-xl mb-8 opacity-90 leading-relaxed">
+                Выберите курс обучения от 15 000₽ до 45 000₽, оплатите онлайн и начните обучение с опытными инструкторами
+              </p>
               <Button 
-                size="lg" 
-                className="text-lg px-10 py-7 h-auto shadow-lg hover:shadow-xl transition-shadow"
+                size="lg"
+                className="bg-green-500 hover:bg-green-600 text-white text-lg px-10 py-7 h-auto rounded-xl font-semibold shadow-xl hover:shadow-2xl transition-all"
                 onClick={() => document.getElementById('courses')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                <Icon name="GraduationCap" className="mr-2" size={20} />
-                Начать обучение
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="text-lg px-10 py-7 h-auto"
-                onClick={() => {
-                  setSelectedCourse({
-                    id: 0,
-                    title: 'Пробное занятие',
-                    category: 'Пробный урок',
-                    description: 'Бесплатное пробное занятие',
-                    duration: '45 минут',
-                    price: 0,
-                    features: []
-                  });
-                  setIsEnrollDialogOpen(true);
-                }}
-              >
-                <Icon name="Sparkles" className="mr-2" size={20} />
-                Пробный урок
+                Выбрать курс
               </Button>
             </div>
-          </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <Card className="text-center p-6 bg-white/50 backdrop-blur-sm border-2 hover:border-primary transition-colors">
-              <p className="text-4xl font-bold text-primary mb-2">15</p>
-              <p className="text-sm text-muted-foreground">лет опыта</p>
-            </Card>
-            <Card className="text-center p-6 bg-white/50 backdrop-blur-sm border-2 hover:border-primary transition-colors">
-              <p className="text-4xl font-bold text-primary mb-2">5000+</p>
-              <p className="text-sm text-muted-foreground">выпускников</p>
-            </Card>
-            <Card className="text-center p-6 bg-white/50 backdrop-blur-sm border-2 hover:border-primary transition-colors">
-              <p className="text-4xl font-bold text-primary mb-2">96%</p>
-              <p className="text-sm text-muted-foreground">сдают с 1 раза</p>
-            </Card>
-            <Card className="text-center p-6 bg-white/50 backdrop-blur-sm border-2 hover:border-primary transition-colors">
-              <p className="text-4xl font-bold text-primary mb-2">20+</p>
-              <p className="text-sm text-muted-foreground">автомобилей</p>
-            </Card>
+            <div className="relative">
+              <img 
+                src="https://cdn.poehali.dev/files/b483456c-a2b4-422c-b3a5-ac787ee678eb.png" 
+                alt="Подарочный сертификат" 
+                className="w-full h-auto drop-shadow-2xl"
+              />
+            </div>
           </div>
         </div>
       </section>
