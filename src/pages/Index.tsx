@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/home/Header';
 import HeroSection from '@/components/home/HeroSection';
@@ -28,76 +28,8 @@ interface Instructor {
 }
 
 const Index = () => {
-  const [courses, setCourses] = useState<Course[]>([
-    {
-      id: 1,
-      title: "Категория B (легковой автомобиль)",
-      category: "B",
-      description: "Полный курс обучения вождению легкового автомобиля с нуля до получения прав",
-      duration: "3 месяца",
-      price: 35000,
-      features: [
-        "130 часов теории",
-        "56 часов практики",
-        "Современные автомобили",
-        "Помощь в ГИБДД"
-      ]
-    },
-    {
-      id: 2,
-      title: "Категория A (мотоцикл)",
-      category: "A",
-      description: "Обучение вождению мотоцикла для начинающих и опытных водителей",
-      duration: "2 месяца",
-      price: 28000,
-      features: [
-        "Теория ПДД",
-        "18 часов практики",
-        "Современные мотоциклы",
-        "Экипировка включена"
-      ]
-    },
-    {
-      id: 3,
-      title: "Категория C (грузовой автомобиль)",
-      category: "C",
-      description: "Профессиональная подготовка водителей грузовых автомобилей",
-      duration: "4 месяца",
-      price: 45000,
-      features: [
-        "Расширенная теория",
-        "72 часа практики",
-        "Грузовики разных типов",
-        "Допуск к экзамену"
-      ]
-    }
-  ]);
-  const [instructors, setInstructors] = useState<Instructor[]>([
-    {
-      id: 1,
-      name: "Иванов Сергей Петрович",
-      specialization: "Категории B, C",
-      experience: 15,
-      rating: 4.9,
-      bio: "Мастер производственного обучения высшей категории. Более 1000 выпускников."
-    },
-    {
-      id: 2,
-      name: "Петрова Анна Викторовна",
-      specialization: "Категория B",
-      experience: 8,
-      rating: 4.8,
-      bio: "Терпеливый инструктор с индивидуальным подходом к каждому ученику."
-    },
-    {
-      id: 3,
-      name: "Смирнов Дмитрий Александрович",
-      specialization: "Категории A, B",
-      experience: 12,
-      rating: 4.95,
-      bio: "Специалист по обучению вождению мотоциклов и автомобилей."
-    }
-  ]);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [instructors, setInstructors] = useState<Instructor[]>([]);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [isEnrollDialogOpen, setIsEnrollDialogOpen] = useState(false);
   const { toast } = useToast();
@@ -108,6 +40,31 @@ const Index = () => {
     email: '',
     message: ''
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [coursesRes, instructorsRes] = await Promise.all([
+          fetch('https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db?table=courses'),
+          fetch('https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db?table=instructors')
+        ]);
+
+        if (coursesRes.ok) {
+          const coursesData = await coursesRes.json();
+          setCourses(coursesData);
+        }
+
+        if (instructorsRes.ok) {
+          const instructorsData = await instructorsRes.json();
+          setInstructors(instructorsData);
+        }
+      } catch (error) {
+        console.error('Failed to load data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleEnroll = (course: Course) => {
     setSelectedCourse(course);
