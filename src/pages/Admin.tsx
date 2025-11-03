@@ -108,7 +108,14 @@ const Admin = () => {
       const response = await fetch(`https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db?table=${table}&_t=${Date.now()}`, {
         cache: 'no-store'
       });
+      
+      if (!response.ok) {
+        console.error(`Failed to fetch ${table}: ${response.status}`);
+        throw new Error(`HTTP ${response.status}`);
+      }
+      
       const data = await response.json();
+      console.log(`Loaded ${table}:`, data);
       
       if (table === 'courses') {
         setCourses(data);
@@ -118,9 +125,10 @@ const Admin = () => {
         setEnrollments(data);
       }
     } catch (error) {
+      console.error(`Error loading ${table}:`, error);
       toast({
         title: "Ошибка",
-        description: "Не удалось загрузить данные",
+        description: `Не удалось загрузить ${table === 'courses' ? 'курсы' : table === 'instructors' ? 'инструкторов' : 'заявки'}`,
         variant: "destructive"
       });
     } finally {
@@ -233,6 +241,7 @@ const Admin = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      console.log('Admin authenticated, loading data...');
       sessionStorage.setItem('adminAuth', 'true');
       fetchData('enrollments');
       fetchData('courses');
