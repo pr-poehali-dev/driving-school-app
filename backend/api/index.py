@@ -1,5 +1,5 @@
 '''
-Business: API для управления данными автошколы (CRUD операции)
+Business: API для управления данными автошколы (CRUD операции)  
 Args: event - dict с httpMethod, queryStringParameters, body
       context - объект с атрибутами request_id, function_name
 Returns: HTTP response dict с данными из БД

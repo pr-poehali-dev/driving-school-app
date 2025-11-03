@@ -105,7 +105,9 @@ const Admin = () => {
   const fetchData = async (table: string) => {
     setLoading(true);
     try {
-      const response = await fetch(`https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db?table=${table}`);
+      const response = await fetch(`https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db?table=${table}&_t=${Date.now()}`, {
+        cache: 'no-store'
+      });
       const data = await response.json();
       
       if (table === 'courses') {
