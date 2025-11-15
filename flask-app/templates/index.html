@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title animate-fade-in">
+                Получите <span class="gradient-text">водительские права</span> с уверенностью
+            </h1>
+            <p class="hero-subtitle">
+                Профессиональное обучение вождению в современной автошколе с опытными инструкторами
+            </p>
+            <div class="hero-cta">
+                <a href="#enrollment" class="btn btn-primary">Записаться на курс</a>
+                <a href="#courses" class="btn btn-secondary">Наши курсы</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="courses" class="section">
+    <div class="container">
+        <h2 class="section-title">Наши курсы обучения</h2>
+        <p class="section-subtitle">Выберите подходящую программу обучения</p>
+        
+        <div class="courses-grid">
+            {% for course in courses %}
+            <div class="course-card hover-scale">
+                <div class="course-header">
+                    <span class="course-badge">{{ course.category }}</span>
+                    <h3 class="course-title">{{ course.title }}</h3>
+                </div>
+                <p class="course-description">{{ course.description }}</p>
+                <ul class="course-features">
+                    {% for feature in course.features %}
+                    <li>✓ {{ feature }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="course-footer">
+                    <div class="course-info">
+                        <span class="course-duration">⏱️ {{ course.duration }}</span>
+                    </div>
+                    <div class="course-price">{{ course.price|format_number }} ₽</div>
+                </div>
+                <button class="btn btn-primary btn-block enroll-btn" data-course-id="{{ course.id }}" data-course-title="{{ course.title }}">
+                    Записаться
+                </button>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="instructors" class="section section-alt">
+    <div class="container">
+        <h2 class="section-title">Наши инструкторы</h2>
+        <p class="section-subtitle">Опытные профессионалы своего дела</p>
+        
+        <div class="instructors-grid">
+            {% for instructor in instructors %}
+            <div class="instructor-card hover-scale">
+                <div class="instructor-avatar">
+                    {{ instructor.name[0] }}
+                </div>
+                <h3 class="instructor-name">{{ instructor.name }}</h3>
+                <p class="instructor-specialization">{{ instructor.specialization }}</p>
+                <div class="instructor-stats">
+                    <div class="stat">
+                        <span class="stat-value">{{ instructor.experience }}</span>
+                        <span class="stat-label">лет опыта</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value">{{ instructor.rating }}</span>
+                        <span class="stat-label">рейтинг</span>
+                    </div>
+                </div>
+                <p class="instructor-bio">{{ instructor.bio }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section id="enrollment" class="section">
+    <div class="container">
+        <h2 class="section-title">Записаться на обучение</h2>
+        <p class="section-subtitle">Заполните форму, и мы свяжемся с вами в ближайшее время</p>
+        
+        <div class="enrollment-form-container">
+            <form id="enrollmentForm" class="enrollment-form">
+                <div class="form-group">
+                    <label for="fullName">Ваше имя *</label>
+                    <input type="text" id="fullName" name="full_name" required placeholder="Иван Иванов">
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Телефон *</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="+7 (999) 123-45-67">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="ivan@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="courseId">Выберите курс *</label>
+                    <select id="courseId" name="course_id" required>
+                        <option value="">-- Выберите курс --</option>
+                        {% for course in courses %}
+                        <option value="{{ course.id }}">{{ course.title }} ({{ course.price|format_number }} ₽)</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Дополнительная информация</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Укажите удобное время для звонка или другие пожелания"></textarea>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div id="toast" class="toast"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const enrollButtons = document.querySelectorAll('.enroll-btn');
+    const form = document.getElementById('enrollmentForm');
+    const courseSelect = document.getElementById('courseId');
+    
+    enrollButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const courseId = this.dataset.courseId;
+            courseSelect.value = courseId;
+            document.getElementById('enrollment').scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+    
+    form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            full_name: document.getElementById('fullName').value,
+            phone: document.getElementById('phone').value,
+            email: document.getElementById('email').value || null,
+            course_id: parseInt(document.getElementById('courseId').value),
+            message: document.getElementById('message').value || null
+        };
+        
+        try {
+            const response = await fetch('/api/enrollments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            if (response.ok) {
+                showToast('Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.', 'success');
+                form.reset();
+            } else {
+                const error = await response.json();
+                showToast(error.error || 'Произошла ошибка при отправке заявки', 'error');
+            }
+        } catch (error) {
+            showToast('Произошла ошибка при отправке заявки', 'error');
+        }
+    });
+});
+
+function showToast(message, type = 'info') {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = `toast toast-${type} show`;
+    
+    setTimeout(() => {
+        toast.className = 'toast';
+    }, 3000);
+}
+</script>
+{% endblock %}
