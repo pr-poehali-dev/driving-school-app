@@ -31,12 +31,12 @@ def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
             'isBase64Encoded': False
         }
     
-    database_url = os.environ.get('DATABASE_URL')
+    database_url = os.environ.get('RENDER_DATABASE_URL')
     if not database_url:
         return {
             'statusCode': 500,
             'headers': {'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*'},
-            'body': json.dumps({'error': 'DATABASE_URL not configured'}),
+            'body': json.dumps({'error': 'RENDER_DATABASE_URL not configured'}),
             'isBase64Encoded': False
         }
     

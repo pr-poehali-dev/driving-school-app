@@ -20,9 +20,9 @@ def normalize_name(name: str) -> str:
 
 def get_db_connection():
     """Создание подключения к БД"""
-    database_url = os.environ.get('DATABASE_URL')
+    database_url = os.environ.get('RENDER_DATABASE_URL')
     if not database_url:
-        raise Exception('DATABASE_URL не найден')
+        raise Exception('RENDER_DATABASE_URL не найден')
     return psycopg2.connect(database_url)
 
 def handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
