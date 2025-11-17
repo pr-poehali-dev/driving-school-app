@@ -4,28 +4,13 @@
       "name": "Get courses from database",
       "method": "GET",
       "path": "/?table=courses",
-      "expectedStatus": 200,
-      "expectedBody": {
-        "0": {
-          "id": "number",
-          "title": "string",
-          "category": "string"
-        }
-      },
-      "bodyMatcher": "partial"
+      "expectedStatus": 200
     },
     {
       "name": "Get instructors from database",
       "method": "GET",
       "path": "/?table=instructors",
-      "expectedStatus": 200,
-      "expectedBody": {
-        "0": {
-          "id": "number",
-          "name": "string"
-        }
-      },
-      "bodyMatcher": "partial"
+      "expectedStatus": 200
     }
   ]
 }

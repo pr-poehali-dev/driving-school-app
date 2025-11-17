@@ -121,7 +121,7 @@ const Index = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('https://functions.poehali.dev/b0d7aa51-2c0f-4f88-bd58-959eec7781db?table=enrollments', {
+      const response = await fetch('https://functions.poehali.dev/127ff586-f47f-450b-81c4-f7bc88a67fea', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -139,12 +139,13 @@ const Index = () => {
         setFormData({ full_name: '', phone: '', email: '', message: '' });
         setIsEnrollDialogOpen(false);
       } else {
-        throw new Error('Failed to submit');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to submit');
       }
     } catch (error) {
       toast({
         title: "Ошибка",
-        description: "Не удалось отправить заявку. Попробуйте позже.",
+        description: error instanceof Error ? error.message : "Не удалось отправить заявку. Попробуйте позже.",
         variant: "destructive"
       });
     }
